@@ -1,16 +1,5 @@
 # flutter_wanandroid
 
-A new Flutter project.
+[玩Android网站](https://www.wanandroid.com) App Flutter 版本，网站提供[公开的API](https://www.wanandroid.com/blog/show/2)方便大家研究学习，GitHub 上已经有一些这个App的其他语言的版本，比如 Android 版本的 [Awesome-WanAndroid](https://github.com/JsonChao/Awesome-WanAndroid)，实际上我就是准备根据这个开源App来编写一个 Flutter 版本，尽可能的提供相同一直的功能。
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
