@@ -1,0 +1,112 @@
+
+function openRemoteUrl() {
+	# 1、cd 到当前目录
+	currentDir=$(cd "$(dirname "$0")"; pwd)
+	cd ${currentDir}
+
+	# 2、打开远程仓库的地址
+	remoteUrl=$(git remote -v | grep "push" | awk '{print $2}')
+	echo "\033[32m——----- 远程仓库的地址：$remoteUrl \033[0m"
+	open -a Safari $remoteUrl
+
+	sleep 3
+	exit 1
+}
+
+function pushAndOpenWebsite() {
+	# 1、cd 到当前目录
+	currentDir=$(cd "$(dirname "$0")"; pwd)
+	cd ${currentDir}
+
+	# 2、使用脚本获取远程仓库的地址，避免每次手动填写
+	remote=$(git branch -a | grep "remotes")
+	if [ -n "$remote" ]; then
+		# 3、获取当前所在的分支
+		branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+		echo "\033[32m——----- current branch name: $branch \033[0m"
+
+		# 4、push代码到分支上去
+	    git push -u origin $branch
+	    echo "\033[32m——----- push finished \033[0m"
+	    echo "\033[32m——----- 提交完成🎉🎉🎉🎈🎈🎈\033[0m"
+	else
+		echo "\033[32m——----- remote branch not exits \033[0m"
+		echo "\033[32m——----- 提交完成🎉🎉🎉🎈🎈🎈\033[0m"
+	fi
+
+	sleep 3
+	exit 1
+}
+
+
+function commitWithInput() {
+	# 1、cd 到当前目录
+	currentDir=$(cd "$(dirname "$0")"; pwd)
+	cd ${currentDir}
+
+	# 2、获取提交的信息
+	echo "\033[32m——----- 请输入提交信息(不要输入空格)：🙃🙃🙃 \033[0m"
+	read commitInfo
+
+	# 3、提交操作，只能获取当前所在分支，然后进行提交代码
+	git add .
+	git commit -m $commitInfo
+	echo "\033[32m——----- commit finished \033[0m"
+
+	# 4、看看是否有远程仓库
+	pushAndOpenWebsite
+}
+
+function gitPull() {
+	# 1、cd 到当前目录
+	currentDir=$(cd "$(dirname "$0")"; pwd)
+	cd ${currentDir}
+
+	git pull
+}
+
+function commitWithDefaultInfo() {
+	# 1、cd 到当前目录
+	currentDir=$(cd "$(dirname "$0")"; pwd)
+	cd ${currentDir}
+
+	# 2、提交操作
+	git add .
+	git commit -m "备份提交"
+	echo "\033[32m——----- commit finished \033[0m"
+
+	# 3、看看是否有远程仓库
+	pushAndOpenWebsite
+}
+
+function chooseAction() {
+	echo "\033[32m——----- 请选择要进行的操作：\033[0m"
+	echo "\033[32m——----- 1：快速备份提交 \033[0m"
+	echo "\033[32m——----- 2：填写commit信息再提交 \033[0m"
+	echo "\033[32m——----- 3：拉取代码 \033[0m"
+	echo "\033[32m——----- 4：打开远程仓库链接 \033[0m"
+
+	read selectIndex
+
+	if [ $selectIndex -eq 1 ]
+	then
+		commitWithDefaultInfo
+	elif [ $selectIndex -eq 2 ]
+	then
+		commitWithInput
+	elif [ $selectIndex -eq 3 ]
+	then
+		gitPull
+	elif [ $selectIndex -eq 4 ]
+	then
+		openRemoteUrl
+	else
+		echo "\033[32m——----- 没有需要进行的操作😝 \033[0m"
+	fi
+}
+
+function commit() {
+	chooseAction
+}
+
+commit
