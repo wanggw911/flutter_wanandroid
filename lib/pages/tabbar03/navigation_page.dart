@@ -97,7 +97,7 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
             padding: EdgeInsets.all(10.0),
             //decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.red)), //use for debug frame
             width: setWidth(510), //750 - 240
-            height: setHeight(990), //1334 - 100 - 64x
+            height: setHeight(960), //1334 - 100 - 64x
             child: SingleChildScrollView(
               child: Wrap(
                 spacing: 10, //主轴上子控件的间距
