@@ -37,6 +37,7 @@ class KnowledgeTreeNode {
   int parentChapterId;
   bool userControlSetTop;
   int visible;
+  String subNodeNames; //额外添加的属性，用来显示子Node名称拼接出来的字符串
 
   KnowledgeTreeNode(
       {this.children,
@@ -49,10 +50,20 @@ class KnowledgeTreeNode {
       this.visible});
 
   KnowledgeTreeNode.fromJson(Map<String, dynamic> json) {
+    subNodeNames = "";
     if (json['children'] != null) {
       children = new List<KnowledgeTreeNode>();
+      bool isFirst = true;
       json['children'].forEach((v) {
-        children.add(new KnowledgeTreeNode.fromJson(v));
+        KnowledgeTreeNode node = KnowledgeTreeNode.fromJson(v);
+        children.add(node);
+        if (isFirst) {
+          subNodeNames += node.name;
+          isFirst = false;
+        }
+        else {
+          subNodeNames += "、${node.name}";
+        }
       });
     }
     courseId = json['courseId'];
