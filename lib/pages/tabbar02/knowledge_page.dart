@@ -9,8 +9,11 @@ class KnowledgePage extends StatefulWidget {
 class _KnowledgePageState extends State<KnowledgePage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-       child: Center(child: Text('知识体系页面'),),
+    return Scaffold(
+      appBar: AppBar(title: Text('知识体系')),
+      body: Container(
+        child: Center(child: Text('知识体系页面'),),
+      ), 
     );
   }
 }

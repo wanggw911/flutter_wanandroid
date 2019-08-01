@@ -13,7 +13,8 @@ class IndexPage extends StatefulWidget {
 }
 
 class _IndexPageState extends State<IndexPage> {
-  var _currentIndex = 0;
+  var _tabIndex = 0;
+  PageController _pageController;
 
   final List<BottomNavigationBarItem> bottomTabs = [
     BottomNavigationBarItem(
@@ -34,7 +35,7 @@ class _IndexPageState extends State<IndexPage> {
     ),
   ];
 
-  final List<Widget> tabBodies = [
+  final List<Widget> _tabPagess = [
     HomePage(),
     KnowledgePage(),
     NavigationPage(),
@@ -42,20 +43,31 @@ class _IndexPageState extends State<IndexPage> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+
+    _pageController = PageController(initialPage: _tabIndex, keepPage: true);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(title: Text('首页'),),
        backgroundColor: Color.fromRGBO(245, 245, 245, 1.0),
-       body: tabBodies[_currentIndex],
        bottomNavigationBar: BottomNavigationBar(
          type: BottomNavigationBarType.fixed,
-         currentIndex: _currentIndex,
+         currentIndex: _tabIndex,
          items: bottomTabs,
          onTap: (index) {
            setState(() {
-             _currentIndex = index;
+            _tabIndex = index;
+            _pageController.jumpToPage(index);
            });
          },
+       ),
+       body: PageView(
+         children: _tabPagess,
+         controller: _pageController,
+         physics: NeverScrollableScrollPhysics(),
        ),
     );
   }

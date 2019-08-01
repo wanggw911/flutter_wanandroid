@@ -9,8 +9,11 @@ class NavigationPage extends StatefulWidget {
 class _NavigationPageState extends State<NavigationPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-       child: Center(child: Text('导航页面'),),
+    return Scaffold(
+      appBar: AppBar(title: Text('导航')),
+      body: Container(
+        child: Center(child: Text('导航页面'),),
+      ), 
     );
   }
 }

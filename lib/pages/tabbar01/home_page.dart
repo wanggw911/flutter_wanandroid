@@ -13,11 +13,14 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin {
   List<HomeBanner> _bannerList = [];
   int _articlePage = 0;
   List<Article> _articleList = [];
   GlobalKey<EasyRefreshState> _easyRefreshKey =  GlobalKey<EasyRefreshState>();
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -33,27 +36,30 @@ class _HomePageState extends State<HomePage> {
     //初始化：flutter_screenutil 
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
 
-    return Container(
-      child: EasyRefresh(
-        key: _easyRefreshKey,
-        behavior: ScrollOverBehavior(),
-        child: ListView.builder(
-          itemCount: _articleList.length + 1,
-          itemBuilder: (context, index) {
-            if (index == 0) {
-              return _bannerCell(_bannerList);
-            }
-            else {
-              return _articleCell(_articleList[index-1]);
-            }
+    return Scaffold(
+      appBar: AppBar(title: Text('首页')),
+      body: Container(
+        child: EasyRefresh(
+          key: _easyRefreshKey,
+          behavior: ScrollOverBehavior(),
+          child: ListView.builder(
+            itemCount: _articleList.length + 1,
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return _bannerCell(_bannerList);
+              }
+              else {
+                return _articleCell(_articleList[index-1]);
+              }
+            },
+          ),
+          onRefresh: () async {
+            await _refreshData();
+          },
+          loadMore: () async {
+            await _loadMoreData();
           },
         ),
-        onRefresh: () async {
-          await _refreshData();
-        },
-        loadMore: () async {
-          await _loadMoreData();
-        },
       ),
     );
   }
@@ -162,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ));
     }
-    if (article.fresh) {  
+    if (article.fresh) {
       //添加新旧Widget
       tagWidgets.add(Container(
                       padding: EdgeInsets.only(left: 2.0, right: 2.0),
