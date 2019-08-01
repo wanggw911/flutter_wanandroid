@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/knowledge_tree.dart';
+import 'package:flutter_wanandroid/model/navigation_tree.dart';
 import 'package:http/http.dart'as http;
 import 'package:flutter_wanandroid/model/home_banner.dart';
 
@@ -47,6 +48,22 @@ class Network {
       var jsonString = json.decode(response.body);
       KnowledgeTreeNodeRespond articleData = KnowledgeTreeNodeRespond.fromJson(jsonString);
       return articleData.data;
+    }
+    else {
+      return null;
+    }
+  }
+
+  //接口4：获取导航模块的节点数据
+  static Future<List<NavigationSuperNode>> getNavigationAllNodes() async {
+    var requestUrl = "https://www.wanandroid.com/navi/json";
+    var client = http.Client();
+    http.Response response = await client.get(requestUrl);
+    debugLog(response);
+    if (response.statusCode == 200) {
+      var jsonString = json.decode(response.body);
+      NavigationTreeNodeRespond respondData = NavigationTreeNodeRespond.fromJson(jsonString);
+      return respondData.data;
     }
     else {
       return null;
