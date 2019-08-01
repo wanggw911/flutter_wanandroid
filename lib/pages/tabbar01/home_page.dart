@@ -26,13 +26,13 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
   void initState() {
     super.initState();
 
-    //TODO: 目前网络请求写在了视图里面，不大好，应该写在 Provide 中
     _loadBannerData();
     _loadArticleData();
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     //初始化：flutter_screenutil 
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
 
