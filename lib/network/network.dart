@@ -1,6 +1,6 @@
 import 'dart:convert';
+import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:http/http.dart'as http;
-import 'package:flutter_wanandroid/model/article.dart';
 import 'package:flutter_wanandroid/model/home_banner.dart';
 
 class Network {
