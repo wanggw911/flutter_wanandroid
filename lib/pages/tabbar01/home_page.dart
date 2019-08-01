@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_wanandroid/model/home_article.dart';
@@ -16,6 +17,7 @@ class _HomePageState extends State<HomePage> {
   List<HomeBanner> _bannerList = [];
   int _articlePage = 0;
   List<Article> _articleList = [];
+  GlobalKey<EasyRefreshState> _easyRefreshKey =  GlobalKey<EasyRefreshState>();
 
   @override
   void initState() {
@@ -32,17 +34,27 @@ class _HomePageState extends State<HomePage> {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
 
     return Container(
-       child: ListView.builder(
-         itemCount: _articleList.length + 1,
-         itemBuilder: (context, index) {
-           if (index == 0) {
-             return _bannerCell(_bannerList);
-           }
-           else {
-             return _articleCell(_articleList[index-1]);
-           }
-         },
-       ),
+      child: EasyRefresh(
+        key: _easyRefreshKey,
+        behavior: ScrollOverBehavior(),
+        child: ListView.builder(
+          itemCount: _articleList.length + 1,
+          itemBuilder: (context, index) {
+            if (index == 0) {
+              return _bannerCell(_bannerList);
+            }
+            else {
+              return _articleCell(_articleList[index-1]);
+            }
+          },
+        ),
+        onRefresh: () async {
+          await _refreshData();
+        },
+        loadMore: () async {
+          await _loadMoreData();
+        },
+      ),
     );
   }
 
@@ -143,9 +155,8 @@ class _HomePageState extends State<HomePage> {
     if (article.projectLink.length > 0) {
       //添加项目标签Widget
       tagWidgets.add(Container(
-                      //padding: EdgeInsets.all(5.0),
-                      margin: EdgeInsets.all(5.0),
-                      child: Text('项目1', style: TextStyle(color: Colors.red)),
+                      padding: EdgeInsets.only(left: 2.0, right: 2.0),
+                      child: Text('项目', style: TextStyle(color: Colors.red)),
                       decoration: BoxDecoration(
                         border: Border.all(width: 1.0, color: Colors.red)
                       ),
@@ -170,14 +181,26 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _loadBannerData() async {
+  Future _refreshData() async {
+    await _loadBannerData();
+
+    _articlePage = 0;
+    await _loadArticleData();
+  }
+
+  Future _loadMoreData() async {
+    _articlePage += 1;
+    await _loadArticleData();
+  }
+
+  Future _loadBannerData() async {
     var list = await Network.getBannerList();
     setState(() {
       _bannerList.addAll(list);
     });
   }
 
-  void _loadArticleData() async {
+  Future _loadArticleData() async {
     var list = await Network.getHomeArticleList(_articlePage);
     setState(() {
       _articleList.addAll(list);
