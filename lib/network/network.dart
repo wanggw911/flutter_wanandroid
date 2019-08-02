@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/knowledge_tree.dart';
 import 'package:flutter_wanandroid/model/navigation_tree.dart';
+import 'package:flutter_wanandroid/model/project_article.dart';
+import 'package:flutter_wanandroid/model/project_tree.dart';
 import 'package:http/http.dart'as http;
 import 'package:flutter_wanandroid/model/home_banner.dart';
 
@@ -69,6 +71,39 @@ class Network {
       return null;
     }
   }
+ 
+  //接口5：获取项目分类的列表
+  static Future<List<ProjectNode>> getProjectTypes() async {
+    var requestUrl = "https://www.wanandroid.com/project/tree/json";
+    var client = http.Client();
+    http.Response response = await client.get(requestUrl);
+    debugLog(response);
+    if (response.statusCode == 200) {
+      var jsonString = json.decode(response.body);
+      ProjectTreeNodeRespond respondData = ProjectTreeNodeRespond.fromJson(jsonString);
+      return respondData.data;
+    }
+    else {
+      return null;
+    }
+  }
+
+  //接口6：获取项目分类的文章列表  
+  static Future<List<ProjectArticle>> getProjectArticleList() async {
+    var requestUrl = "https://www.wanandroid.com/project/list/1/json?cid=294";
+    var client = http.Client();
+    http.Response response = await client.get(requestUrl);
+    debugLog(response);
+    if (response.statusCode == 200) {
+      var jsonString = json.decode(response.body);
+      ProjectArticleRespond respondData = ProjectArticleRespond.fromJson(jsonString);
+      return respondData.data.datas;
+    }
+    else {
+      return null;
+    }
+  }
+
 
   //debug print
   static debugLog(http.Response response) {
