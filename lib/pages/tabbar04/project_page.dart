@@ -11,7 +11,7 @@ class ProjectsPage extends StatefulWidget {
   _ProjectsPageState createState() => _ProjectsPageState();
 }
 
-class _ProjectsPageState extends State<ProjectsPage> {
+class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClientMixin {
   List<ProjectNode> _projectNodes = [];
   int _selectIndex = 0;
 
@@ -23,6 +23,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
   GlobalKey<EasyRefreshState> _easyRefreshKey =  GlobalKey<EasyRefreshState>();
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   void initState() {
     super.initState();
 
@@ -32,6 +35,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(title: Text('项目')),
       body: Container(
@@ -264,7 +268,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
    Future _loadArticleData(int cid) async {
     var list = await Network.getProjectArticleList(_articlePage, cid);
-    print("列表数据有：${list.length}");
+    //print("列表数据有：${list.length}");
     setState(() {
       _articleList.addAll(list);
     });
