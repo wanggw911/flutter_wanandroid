@@ -28,6 +28,7 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(title: Text('导航')),
       body: Container(
@@ -93,38 +94,58 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
             height: setHeight(100),
             child: Text('${superNode.name}', style: TextStyle(fontSize: setFontSize(36)),),
           ),
-          Container(
-            padding: EdgeInsets.all(10.0),
-            //decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.red)), //use for debug frame
-            width: setWidth(510), //750 - 240
-            height: setHeight(960), //1334 - 100 - 64x
-            child: SingleChildScrollView(
-              child: Wrap(
-                spacing: 10, //主轴上子控件的间距
-                runSpacing: 10, //交叉轴上子控件之间的间距
-                children: _rightItems(),
-              )
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.red)), //use for debug frame
+              padding: EdgeInsets.all(10.0),
+              width: setWidth(510), 
+              child: SingleChildScrollView(
+                child: Wrap(
+                  spacing: 10, //主轴上子控件的间距
+                  runSpacing: 10, //交叉轴上子控件之间的间距
+                  children: _rightItems(),
+                )
+              ),
             ),
-          ),
+          )
+          // Container(
+          //   padding: EdgeInsets.all(10.0),
+          //   //decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.red)), //use for debug frame
+          //   width: setWidth(510), //750 - 240
+          //   height: setHeight(960), //1334 - 100 - 64x
+          //   child: SingleChildScrollView(
+          //     child: Wrap(
+          //       spacing: 10, //主轴上子控件的间距
+          //       runSpacing: 10, //交叉轴上子控件之间的间距
+          //       children: _rightItems(),
+          //     )
+          //   ),
+          // ),
         ],
       ),
     );
   }
 
   List<Widget> _rightItems() {
-    return List.generate(_rightList.length, (index){
-      NavigationSubNode subNode = _rightList[index];
-      return InkWell(
-        child: Container(
-          padding: EdgeInsets.only(top:10, bottom: 10, left: 20, right: 20),
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(30.0),
+    if (_rightList.isEmpty) {
+      return [Container()];
+    }
+    else {
+      var list = List.generate(_rightList.length, (index){
+        NavigationSubNode subNode = _rightList[index];
+        return InkWell(
+          child: Container(
+            padding: EdgeInsets.only(top:10, bottom: 10, left: 20, right: 20),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(30.0),
+            ),
+            child: Text('${subNode.title}'),
           ),
-          child: Text('${subNode.title}'),
-        ),
-      );
-    });
+        );
+      });
+      return list;
+    }
   }
 
   Future _refreshData() async {
