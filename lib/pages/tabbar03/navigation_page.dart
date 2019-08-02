@@ -84,13 +84,13 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
 
   Widget _rightListView() {
     if (_leftList.isEmpty) {
-      print('❌：列表为空，所以直接返回 Container');
+      //print('❌：列表为空，所以直接返回 Container');
       return Container(
         child: Text(''),
       );
     }
 
-    print('✅：列表不为空，所以返回组合 Container');
+    //print('✅：列表不为空，所以返回组合 Container');
     NavigationSuperNode superNode = _leftList[_currentLeftIndex];
     return Container(
       child: Column(
@@ -104,7 +104,7 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
           ),
           Expanded(
             child: Container(
-              decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.red)), //use for debug frame
+              //decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.red)), //use for debug frame
               padding: EdgeInsets.all(10.0),
               width: setWidth(510), 
               child: SingleChildScrollView(
@@ -122,11 +122,7 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
   }
 
   List<Widget> _rightItems() {
-    if (_rightList.isEmpty) {
-      return [Container()];
-    }
-    else {
-      var list = List.generate(_rightList.length, (index){
+    return List.generate(_rightList.length, (index){
         NavigationSubNode subNode = _rightList[index];
         return InkWell(
           child: Container(
@@ -139,8 +135,6 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
           ),
         );
       });
-      return list;
-    }
   }
 
   Future _refreshData() async {
