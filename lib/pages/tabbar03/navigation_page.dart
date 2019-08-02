@@ -83,6 +83,14 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
   }
 
   Widget _rightListView() {
+    if (_leftList.isEmpty) {
+      print('❌：列表为空，所以直接返回 Container');
+      return Container(
+        child: Text(''),
+      );
+    }
+
+    print('✅：列表不为空，所以返回组合 Container');
     NavigationSuperNode superNode = _leftList[_currentLeftIndex];
     return Container(
       child: Column(
@@ -108,19 +116,6 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
               ),
             ),
           )
-          // Container(
-          //   padding: EdgeInsets.all(10.0),
-          //   //decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.red)), //use for debug frame
-          //   width: setWidth(510), //750 - 240
-          //   height: setHeight(960), //1334 - 100 - 64x
-          //   child: SingleChildScrollView(
-          //     child: Wrap(
-          //       spacing: 10, //主轴上子控件的间距
-          //       runSpacing: 10, //交叉轴上子控件之间的间距
-          //       children: _rightItems(),
-          //     )
-          //   ),
-          // ),
         ],
       ),
     );
