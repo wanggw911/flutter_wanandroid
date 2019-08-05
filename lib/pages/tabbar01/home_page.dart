@@ -66,6 +66,12 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
 
   //首页广告视图
   Widget _bannerCell(List bannerList) {
+    if (bannerList.length == 0) {
+      return Container(
+        width: setWidth(750),
+        height: setHeight(350),
+      );
+    }
     return Container(
       width: setWidth(750),
       height: setHeight(350),
