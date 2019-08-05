@@ -9,7 +9,7 @@ import 'package:flutter_wanandroid/model/home_banner.dart';
 
 class Network {
   //接口1：获取首页 banner 列表数据
-  static Future<List<HomeBanner>> getBannerList() async {
+  static Future<List<HomeBanner>> getHomeBannerList() async {
     var requestUrl = "https://www.wanandroid.com/banner/json";
     var client = http.Client();
     http.Response response = await client.get(requestUrl);

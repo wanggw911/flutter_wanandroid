@@ -5,7 +5,9 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/home_banner.dart';
 import 'package:flutter_wanandroid/network/network.dart';
+import 'package:flutter_wanandroid/provide/home_provide.dart';
 import 'package:flutter_wanandroid/tools/tools.dart';
+import 'package:provide/provide.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -14,9 +16,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin {
-  List<HomeBanner> _bannerList = [];
-  int _articlePage = 0;
-  List<Article> _articleList = [];
+  //List<HomeBanner> _bannerList = [];
+  //int _articlePage = 0;
+  //List<Article> _articleList = [];
   GlobalKey<EasyRefreshState> _easyRefreshKey =  GlobalKey<EasyRefreshState>();
 
   @override
@@ -26,20 +28,31 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
   void initState() {
     super.initState();
 
-    _loadBannerData();
-    _loadArticleData();
+    WidgetsBinding.instance.addPostFrameCallback((_){ 
+      print("界面完成build。。。。");
+      _refreshData();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    //初始化：flutter_screenutil 
+    //【项目初始化】之：flutter_screenutil 
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
 
     return Scaffold(
       appBar: AppBar(title: Text('首页')),
       body: Container(
-        child: EasyRefresh(
+        child: _contentListView(),
+      ),
+    );
+  }
+
+  Widget _contentListView() {
+    return Provide<HomeProvide>(builder: (context, child, value) {
+      List<HomeBanner> _bannerList = Provide.value<HomeProvide>(context).bannerList;
+      List<Article> _articleList = Provide.value<HomeProvide>(context).articleList;
+      return EasyRefresh(
           key: _easyRefreshKey,
           behavior: ScrollOverBehavior(),
           child: ListView.builder(
@@ -49,7 +62,12 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
                 return _bannerCell(_bannerList);
               }
               else {
-                return _articleCell(_articleList[index-1]);
+                if (_articleList.length > 0) {
+                  return _articleCell(_articleList[index-1]);
+                }
+                else {
+                  return Container();
+                }
               }
             },
           ),
@@ -59,9 +77,8 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
           loadMore: () async {
             await _loadMoreData();
           },
-        ),
-      ),
-    );
+        );
+    });
   }
 
   //首页广告视图
@@ -194,28 +211,10 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
   }
 
   Future _refreshData() async {
-    await _loadBannerData();
-
-    _articlePage = 0;
-    await _loadArticleData();
+    await Provide.value<HomeProvide>(context).getHomePageData();
   }
 
   Future _loadMoreData() async {
-    _articlePage += 1;
-    await _loadArticleData();
-  }
-
-  Future _loadBannerData() async {
-    var list = await Network.getBannerList();
-    setState(() {
-      _bannerList.addAll(list);
-    });
-  }
-
-  Future _loadArticleData() async {
-    var list = await Network.getHomeArticleList(_articlePage);
-    setState(() {
-      _articleList.addAll(list);
-    });
+    await Provide.value<HomeProvide>(context).getArticleData(false);
   }
 }
