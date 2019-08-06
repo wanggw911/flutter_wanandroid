@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/model/navigation_tree.dart';
+import 'package:flutter_wanandroid/pages/common/common_appbar.dart';
+import 'package:flutter_wanandroid/pages/common/drawer_menu.dart';
 import 'package:flutter_wanandroid/pages/common/web_detail.dart';
 import 'package:flutter_wanandroid/provide/navigation_provide.dart';
 import 'package:flutter_wanandroid/tools/tools.dart';
@@ -30,7 +32,10 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      appBar: AppBar(title: Text('导航')),
+      appBar: AppBuilder.commonAppBar('导航'),
+      drawer: Drawer(
+        child: MenuBuilder.menuDrawer()
+      ),
       body: Container(
         child: Row(
           children: <Widget>[

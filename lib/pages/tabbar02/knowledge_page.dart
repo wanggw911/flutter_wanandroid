@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_wanandroid/model/knowledge_tree.dart';
+import 'package:flutter_wanandroid/pages/common/common_appbar.dart';
+import 'package:flutter_wanandroid/pages/common/drawer_menu.dart';
 import 'package:flutter_wanandroid/provide/knowledge_provide.dart';
 import 'package:flutter_wanandroid/tools/tools.dart';
 import 'package:provide/provide.dart';
@@ -33,7 +35,10 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      appBar: AppBar(title: Text('知识体系')),
+      appBar: AppBuilder.commonAppBar('知识体系'),
+      drawer: Drawer(
+        child: MenuBuilder.menuDrawer()
+      ),
       body: Container(
         child: _contentListView(),
       ), 
