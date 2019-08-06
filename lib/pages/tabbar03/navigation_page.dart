@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/model/navigation_tree.dart';
+import 'package:flutter_wanandroid/pages/common/web_detail.dart';
 import 'package:flutter_wanandroid/provide/navigation_provide.dart';
 import 'package:flutter_wanandroid/tools/tools.dart';
 import 'package:provide/provide.dart';
@@ -133,6 +134,14 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
     return List.generate(rightList.length, (index){
         NavigationSubNode subNode = rightList[index];
         return InkWell(
+          onTap: (){
+            //页面跳转：WebDetailPage 
+            Navigator.of(context).push(
+            MaterialPageRoute(builder: (BuildContext context) {
+                return WebDetailPage(model: subNode);
+              })
+            );
+          },
           child: Container(
             padding: EdgeInsets.only(top:10, bottom: 10, left: 20, right: 20),
             decoration: BoxDecoration(
