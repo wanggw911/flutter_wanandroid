@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 class MenuBuilder {
-  static Widget menuDrawer() {
+  static Widget menuDrawer(BuildContext context) {
     return Container(
       //decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.red)), //use for debug frame
       child: ListView(
@@ -12,7 +12,10 @@ class MenuBuilder {
           ListTile(
             leading: Icon(Icons.android),
             title: Text('玩Android'),
-            onTap: (){},
+            onTap: () {
+              //侧滑菜单返回，主动调用返回事件
+              Navigator.pop(context);
+            },
           ),
           ListTile(
             leading: Icon(Icons.favorite),

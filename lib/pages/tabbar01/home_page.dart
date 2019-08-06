@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
     return Scaffold(
       appBar: AppBuilder.commonAppBar('首页'),
       drawer: Drawer(
-        child: MenuBuilder.menuDrawer()
+        child: MenuBuilder.menuDrawer(context)
       ),
       body: Container(
         child: _contentListView(),

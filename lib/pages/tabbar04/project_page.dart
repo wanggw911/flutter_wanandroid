@@ -38,7 +38,7 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
     return Scaffold(
       appBar: AppBuilder.commonAppBar('项目'),
       drawer: Drawer(
-        child: MenuBuilder.menuDrawer()
+        child: MenuBuilder.menuDrawer(context)
       ),
       body: Container(
         child: Column(

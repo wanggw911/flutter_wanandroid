@@ -34,7 +34,7 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
     return Scaffold(
       appBar: AppBuilder.commonAppBar('导航'),
       drawer: Drawer(
-        child: MenuBuilder.menuDrawer()
+        child: MenuBuilder.menuDrawer(context)
       ),
       body: Container(
         child: Row(

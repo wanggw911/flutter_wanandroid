@@ -37,7 +37,7 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
     return Scaffold(
       appBar: AppBuilder.commonAppBar('知识体系'),
       drawer: Drawer(
-        child: MenuBuilder.menuDrawer()
+        child: MenuBuilder.menuDrawer(context)
       ),
       body: Container(
         child: _contentListView(),
