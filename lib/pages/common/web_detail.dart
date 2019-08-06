@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/navigation_tree.dart';
 import 'package:flutter_wanandroid/model/project_article.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 class WebDetailPage extends StatefulWidget {
   final dynamic model;
@@ -41,33 +42,37 @@ class _WebDetailPageState extends State<WebDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return WebviewScaffold(
+        url: urlString,
+        appBar: _navigationBar(),
+        withZoom: true, // 允许网页缩放
+        withLocalStorage: true, // 允许LocalStorage
+        withJavascript: true, // 允许执行js代码
+    );
+  }
+
+  Widget _navigationBar() {
+    return AppBar(
         title: Text('$title'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.favorite_border, color: Colors.white,),
             tooltip: 'Air it',
             onPressed: (){
-              showDialog(context: context, builder: (context){
-                return AlertDialog(content: Text('点击了收藏按钮'),);
-              });
+              print('点击了收藏按钮');
             },
           ),
           IconButton(
             icon: Icon(Icons.more_vert),
             tooltip: 'Air it',
             onPressed: (){
-              showDialog(context: context, builder: (context){
-                return AlertDialog(content: Text('点击了更多按钮'),);
-              });
+              print('点击了更多按钮');
+              // showDialog(context: context, builder: (context){
+              //   return AlertDialog(content: Text('点击了更多按钮'),);
+              // });
             },
           ),
         ],
-      ),
-      body: Container(
-        child: Center(child: Text('$urlString'),),
-      ),
-    );
+      );
   }
 }
