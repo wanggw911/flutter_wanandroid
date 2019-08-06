@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/home_banner.dart';
+import 'package:flutter_wanandroid/pages/common/drawer_menu.dart';
 import 'package:flutter_wanandroid/pages/common/web_detail.dart';
 import 'package:flutter_wanandroid/provide/home_provide.dart';
 import 'package:flutter_wanandroid/tools/tools.dart';
@@ -39,7 +40,23 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
     
     return Scaffold(
-      appBar: AppBar(title: Text('首页')),
+      appBar: AppBar(
+        title: Text('首页'),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
+        ), 
+      ),
+      drawer: Drawer(
+        child: MenuBuilder.menuDrawer(),
+      ),
       body: Container(
         child: _contentListView(),
       ),
