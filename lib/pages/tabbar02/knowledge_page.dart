@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_wanandroid/model/knowledge_tree.dart';
-import 'package:flutter_wanandroid/network/network.dart';
+import 'package:flutter_wanandroid/provide/knowledge_provide.dart';
 import 'package:flutter_wanandroid/tools/tools.dart';
+import 'package:provide/provide.dart';
 
 class KnowledgePage extends StatefulWidget {
   KnowledgePage({Key key}) : super(key: key);
@@ -12,7 +13,7 @@ class KnowledgePage extends StatefulWidget {
 }
 
 class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveClientMixin {
-  List<KnowledgeTreeNode> _nodeList = [];
+
   GlobalKey<EasyRefreshState> _easyRefreshKey =  GlobalKey<EasyRefreshState>();
 
   @override
@@ -22,7 +23,10 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
   void initState() {
     super.initState();
 
-    _loadNodeData();
+    //页面加载完毕请求数据
+    WidgetsBinding.instance.addPostFrameCallback((_){ 
+      _refreshData();
+    });
   }
 
   @override
@@ -31,7 +35,15 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
     return Scaffold(
       appBar: AppBar(title: Text('知识体系')),
       body: Container(
-        child: EasyRefresh(
+        child: _contentListView(),
+      ), 
+    );
+  }
+
+  Widget _contentListView() {
+    return Provide<KnowledgeProvide>(builder: (context, child, value) {
+      List<KnowledgeTreeNode> _nodeList = Provide.value<KnowledgeProvide>(context).nodeList;
+      return EasyRefresh(
           key: _easyRefreshKey,
           behavior: ScrollOverBehavior(),
           child: ListView.builder(
@@ -43,9 +55,8 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
           onRefresh: () async {
             await _refreshData();
           },
-        )
-      ), 
-    );
+        );
+    });
   }
 
   Widget _nodeCell(KnowledgeTreeNode node) {
@@ -89,14 +100,6 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
   }
 
   Future _refreshData() async {
-    await _loadNodeData();
-  }
-
-  Future _loadNodeData() async {
-    _nodeList.clear();
-    var list = await Network.getKnowledgeAllNodes();
-    setState(() {
-      _nodeList.addAll(list);
-    });
+    await Provide.value<KnowledgeProvide>(context).getNodeData();
   }
 }

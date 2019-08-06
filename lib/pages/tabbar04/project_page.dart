@@ -3,7 +3,9 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_wanandroid/model/project_article.dart';
 import 'package:flutter_wanandroid/model/project_tree.dart';
 import 'package:flutter_wanandroid/network/network.dart';
+import 'package:flutter_wanandroid/provide/projects_provide.dart';
 import 'package:flutter_wanandroid/tools/tools.dart';
+import 'package:provide/provide.dart';
 
 class ProjectsPage extends StatefulWidget {
   ProjectsPage({Key key}) : super(key: key);
@@ -15,11 +17,9 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
   List<ProjectNode> _projectNodes = [];
   int _selectIndex = 0;
 
-  List<Widget> _pages = [];
-  PageController _pageController;
-
   int _articlePage = 1; 
   List<ProjectArticle> _articleList = [];
+
   GlobalKey<EasyRefreshState> _easyRefreshKey =  GlobalKey<EasyRefreshState>();
 
   @override
@@ -29,8 +29,10 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
   void initState() {
     super.initState();
 
-    _pageController = PageController(initialPage: _selectIndex, keepPage: true);
-    _loadProjectNodeData();
+    //页面加载完毕请求数据
+    WidgetsBinding.instance.addPostFrameCallback((_){ 
+      _loadProjectNodeData();
+    });
   }
 
   @override
@@ -56,20 +58,28 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
       decoration: BoxDecoration(
         border: Border(bottom: BorderSide(width: 1.0, color: Colors.grey[300])),
       ),
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: _projectNodes.length,
-        itemBuilder: (context, index) {
-          return _topNavigationCell(index);
-        },
-      ),
+      child: _topNavigationListView(),
     );
   }
 
-  Widget _topNavigationCell(int index) {
-    bool isSelect = (index == _selectIndex) ? true : false;
-    bool isLast = (index == (_projectNodes.length - 1)) ? true : false;
-    ProjectNode node = _projectNodes[index];
+  Widget _topNavigationListView() {
+    return Provide<ProjectProvide>(builder: (context, child, value) {
+      List<ProjectNode> projectNodeList = Provide.value<ProjectProvide>(context).projectNodeList;
+      int selectIndex = Provide.value<ProjectProvide>(context).projectNodeIndex;
+      return ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: projectNodeList.length,
+        itemBuilder: (context, index) {
+          return _topNavigationCell(projectNodeList, index, selectIndex);
+        },
+      );
+    });
+  }
+
+  Widget _topNavigationCell(List<ProjectNode> projectNodeList, int index, int selectIndex) {
+    bool isSelect = (index == selectIndex) ? true : false;
+    bool isLast = (index == (projectNodeList.length - 1)) ? true : false;
+    ProjectNode node = projectNodeList[index];
 
     List<Widget> cellItems = [];
     cellItems.add(Container(
@@ -103,12 +113,13 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
 
     return InkWell(
       onTap: () {
-        setState(() {
-          _selectIndex = index;
-          _articleList.clear();
-        });
-        ProjectNode node = _projectNodes[index];
-        _loadArticleData(node.id);
+        Provide.value<ProjectProvide>(context).selectProjectNodeWith(index);
+        // setState(() {
+        //   _selectIndex = index;
+        //   _articleList.clear();
+        // });
+        // ProjectNode node = _projectNodes[index];
+        // _loadArticleData(node.id);
       },
       child: Row(
         children: cellItems,
@@ -116,37 +127,17 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
     );
   }
 
-  // Widget _listContent() {
-    // if (_projectNodes.isEmpty) {
-    //   return Expanded(
-    //     child: Container(
-    //       //decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.red)), //use for debug frame
-    //       child: Center(
-    //         child: Text('加载中...'),
-    //       ),
-    //     ),
-    //   );
-    // }
-    // return Expanded(
-    //   child: Container(
-    //     decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.red)), //use for debug frame
-    //     child: PageView(
-    //       children: _pages,
-    //       controller: _pageController,
-    //       physics: NeverScrollableScrollPhysics(),//禁止左右滑动
-    //     ),
-    //   ),
-    // );
-  // }
-
-  //这个是会服用多次，所以可能会存在一些问题
   Widget _pageContent() {
-    if (_projectNodes.isEmpty) {
-      return Expanded(child: Container(child: Center(child: Text('加载中...'),),),);
-    }
+    return Provide<ProjectProvide>(builder: (context, child, value) {
+      List<ProjectNode> projectNodeList = Provide.value<ProjectProvide>(context).projectNodeList;
+      if (projectNodeList.isEmpty) {
+        return Expanded(child: Container(child: Center(child: Text('加载中...'),),),);
+      }
 
-    ProjectNode node = _projectNodes[_selectIndex];
-    return Expanded(
+      //int selectIndex = Provide.value<ProjectProvide>(context).projectNodeIndex;
+      //ProjectNode node = projectNodeList[selectIndex];
+      List<ProjectArticle> articleList = Provide.value<ProjectProvide>(context).articleList;
+      return Expanded(
       child: Container(
         //decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.red)), //use for debug frame
         decoration: BoxDecoration(color: Colors.grey[200],),
@@ -155,20 +146,21 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
           key: _easyRefreshKey,
           behavior: ScrollOverBehavior(),
             child: ListView.builder(
-              itemCount: _articleList.length,
+              itemCount: articleList.length,
               itemBuilder: (context, index) {
-                return _articleCell(_articleList[index]);
+                return _articleCell(articleList[index]);
               },
             ),
             onRefresh: () async {
-              await _refreshData(node.id);
+              await _refreshData();
             },
             loadMore: () async {
-              await _loadMoreData(node.id);
+              await _loadMoreData();
             },
         ),
       ),
     );
+    });
   }
 
   Widget _articleCell(ProjectArticle article) {
@@ -240,37 +232,16 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
     );
   }
 
+
   Future _loadProjectNodeData() async {
-    _pages.clear();
-    _projectNodes.clear();
-    var list = await Network.getProjectTypes();
-    
-    if (list.isNotEmpty) {
-      ProjectNode node = list[0];
-      _loadArticleData(node.id);
-    }
-
-    setState(() {
-      _projectNodes.addAll(list);
-    });
+    await Provide.value<ProjectProvide>(context).getProjectNodeData();
   }
 
-   Future _refreshData(int cid) async {
-    _articlePage = 1;
-    _articleList.clear();
-    await _loadArticleData(cid);
+  Future _refreshData() async {
+    await Provide.value<ProjectProvide>(context).getArticleData(true);
   }
 
-  Future _loadMoreData(int cid) async {
-    _articlePage += 1;
-    await _loadArticleData(cid);
-  }
-
-   Future _loadArticleData(int cid) async {
-    var list = await Network.getProjectArticleList(_articlePage, cid);
-    //print("列表数据有：${list.length}");
-    setState(() {
-      _articleList.addAll(list);
-    });
+  Future _loadMoreData() async {
+    await Provide.value<ProjectProvide>(context).getArticleData(false);
   }
 }

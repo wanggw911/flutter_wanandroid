@@ -16,9 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin {
-  //List<HomeBanner> _bannerList = [];
-  //int _articlePage = 0;
-  //List<Article> _articleList = [];
+
   GlobalKey<EasyRefreshState> _easyRefreshKey =  GlobalKey<EasyRefreshState>();
 
   @override
@@ -28,8 +26,8 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
   void initState() {
     super.initState();
 
+    //页面加载完毕请求数据
     WidgetsBinding.instance.addPostFrameCallback((_){ 
-      print("界面完成build。。。。");
       _refreshData();
     });
   }
@@ -39,7 +37,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
     super.build(context);
     //【项目初始化】之：flutter_screenutil 
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
-
+    
     return Scaffold(
       appBar: AppBar(title: Text('首页')),
       body: Container(
