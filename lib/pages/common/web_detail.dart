@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/model/home_article.dart';
+import 'package:flutter_wanandroid/model/home_banner.dart';
 import 'package:flutter_wanandroid/model/navigation_tree.dart';
 import 'package:flutter_wanandroid/model/project_article.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
@@ -21,7 +22,12 @@ class _WebDetailPageState extends State<WebDetailPage> {
     super.initState();
 
     title = "详情";
-    if (widget.model is Article) {
+    if (widget.model is HomeBanner) {
+      var banner = widget.model as HomeBanner;
+      title = banner.title;
+      urlString = banner.url;
+    }
+    else if (widget.model is Article) {
       var article = widget.model as Article;
       title = article.title;
       urlString = article.link;

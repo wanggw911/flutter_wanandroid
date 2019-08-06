@@ -96,9 +96,19 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
         itemCount: bannerList.length,
         itemBuilder: (context, index) {
           HomeBanner banner = bannerList[index];
-          return Image.network(
-            banner.imagePath,
-            fit: BoxFit.fill,
+          return InkWell(
+            onTap: (){
+              //页面跳转：WebDetailPage 
+              Navigator.of(context).push(
+              MaterialPageRoute(builder: (BuildContext context) {
+                  return WebDetailPage(model: banner);
+                })
+              );
+            },
+            child: Image.network(
+              banner.imagePath,
+              fit: BoxFit.fill,
+            ),
           );
         },
       ),
