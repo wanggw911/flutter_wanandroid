@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/home_banner.dart';
+import 'package:flutter_wanandroid/pages/common/web_detail.dart';
 import 'package:flutter_wanandroid/provide/home_provide.dart';
 import 'package:flutter_wanandroid/tools/tools.dart';
 import 'package:provide/provide.dart';
@@ -108,6 +109,14 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
     return Container(
       padding: EdgeInsets.only(left: 10.0, top: 5.0, right: 10.0),
       child: InkWell(
+        onTap: () {
+          //页面跳转：WebDetailPage 
+          Navigator.of(context).push(
+          MaterialPageRoute(builder: (BuildContext context) {
+              return WebDetailPage(model: article);
+            })
+          );
+        },
         child: Card(
           child: Column(
             children: <Widget>[
