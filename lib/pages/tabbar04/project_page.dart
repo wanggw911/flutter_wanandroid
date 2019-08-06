@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_wanandroid/model/project_article.dart';
 import 'package:flutter_wanandroid/model/project_tree.dart';
-import 'package:flutter_wanandroid/network/network.dart';
 import 'package:flutter_wanandroid/provide/projects_provide.dart';
 import 'package:flutter_wanandroid/tools/tools.dart';
 import 'package:provide/provide.dart';
@@ -14,11 +13,6 @@ class ProjectsPage extends StatefulWidget {
 }
 
 class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClientMixin {
-  List<ProjectNode> _projectNodes = [];
-  int _selectIndex = 0;
-
-  int _articlePage = 1; 
-  List<ProjectArticle> _articleList = [];
 
   GlobalKey<EasyRefreshState> _easyRefreshKey =  GlobalKey<EasyRefreshState>();
 
@@ -114,12 +108,6 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
     return InkWell(
       onTap: () {
         Provide.value<ProjectProvide>(context).selectProjectNodeWith(index);
-        // setState(() {
-        //   _selectIndex = index;
-        //   _articleList.clear();
-        // });
-        // ProjectNode node = _projectNodes[index];
-        // _loadArticleData(node.id);
       },
       child: Row(
         children: cellItems,
@@ -134,8 +122,6 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
         return Expanded(child: Container(child: Center(child: Text('加载中...'),),),);
       }
 
-      //int selectIndex = Provide.value<ProjectProvide>(context).projectNodeIndex;
-      //ProjectNode node = projectNodeList[selectIndex];
       List<ProjectArticle> articleList = Provide.value<ProjectProvide>(context).articleList;
       return Expanded(
       child: Container(

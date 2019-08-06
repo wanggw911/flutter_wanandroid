@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/home_banner.dart';
-import 'package:flutter_wanandroid/network/network.dart';
 import 'package:flutter_wanandroid/provide/home_provide.dart';
 import 'package:flutter_wanandroid/tools/tools.dart';
 import 'package:provide/provide.dart';
