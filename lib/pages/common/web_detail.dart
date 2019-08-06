@@ -4,6 +4,7 @@ import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/home_banner.dart';
 import 'package:flutter_wanandroid/model/navigation_tree.dart';
 import 'package:flutter_wanandroid/model/project_article.dart';
+import 'package:flutter_wanandroid/tools/tools.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 class WebDetailPage extends StatefulWidget {
@@ -68,16 +69,34 @@ class _WebDetailPageState extends State<WebDetailPage> {
               print('点击了收藏按钮');
             },
           ),
-          IconButton(
+          PopupMenuButton<String>(
             icon: Icon(Icons.more_vert),
-            tooltip: 'Air it',
-            onPressed: (){
-              print('点击了更多按钮');
-              // showDialog(context: context, builder: (context){
-              //   return AlertDialog(content: Text('点击了更多按钮'),);
-              // });
+            onSelected: (String value) {
+              print('选择的菜单是$value');
             },
+            itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
+              PopupMenuItem<String>(
+                height: setHeight(40),
+                value: '选项一的值',
+                child: new Text('分享')
+              ),
+              PopupMenuItem<String>(
+                height: setHeight(40),
+                value: '选项二的值',
+                child: new Text('Safari打开')
+              ),
+            ]
           ),
+          // IconButton(
+          //   icon: Icon(Icons.more_vert),
+          //   tooltip: 'Air it',
+          //   onPressed: (){
+          //     print('点击了更多按钮');
+          //     // showDialog(context: context, builder: (context){
+          //     //   return AlertDialog(content: Text('点击了更多按钮'),);
+          //     // });
+          //   },
+          // ),
         ],
       );
   }
