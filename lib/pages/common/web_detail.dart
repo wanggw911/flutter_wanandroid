@@ -10,22 +10,50 @@ class WebDetailPage extends StatefulWidget {
 }
 
 class _WebDetailPageState extends State<WebDetailPage> {
-  //dynamic model;
-  //_WebDetailPageState(model);
+  String title;
+  String urlString;
+
+  @override
+  void initState() {
+    super.initState();
+
+    title = "详情";
+    if (widget.model is Article) {
+      var article = widget.model as Article;
+      title = article.title;
+      urlString = article.link;
+      print("Web详情：\n文章名字：$title \n文章地址：$urlString");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    
-    var title = "web详情";
-    if (widget.model is Article) {
-      title = "文章详情";
-      print("文章详情");
-    }
-
     return Scaffold(
-      appBar: AppBar(title: Text('$title'),),
+      appBar: AppBar(
+        title: Text('$title'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.favorite_border, color: Colors.white,),
+            tooltip: 'Air it',
+            onPressed: (){
+              showDialog(context: context, builder: (context){
+                return AlertDialog(content: Text('点击了收藏按钮'),);
+              });
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.more_vert),
+            tooltip: 'Air it',
+            onPressed: (){
+              showDialog(context: context, builder: (context){
+                return AlertDialog(content: Text('点击了更多按钮'),);
+              });
+            },
+          ),
+        ],
+      ),
       body: Container(
-        child: Center(child: Text('$title'),),
+        child: Center(child: Text('$urlString'),),
       ),
     );
   }
