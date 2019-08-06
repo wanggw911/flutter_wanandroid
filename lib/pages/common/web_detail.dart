@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/navigation_tree.dart';
+import 'package:flutter_wanandroid/model/project_article.dart';
 
 class WebDetailPage extends StatefulWidget {
   final dynamic model;
@@ -29,6 +30,12 @@ class _WebDetailPageState extends State<WebDetailPage> {
       title = subNode.title;
       urlString = subNode.link;
     }
+    else if (widget.model is ProjectArticle) {
+      var project = widget.model as ProjectArticle;
+      title = project.title;
+      urlString = project.link;
+    }
+    
     print("WebDetailPage：Web详情: \n\t文章名字: $title \n\t文章地址: $urlString");
   }
 
