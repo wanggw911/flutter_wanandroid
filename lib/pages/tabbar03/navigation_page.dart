@@ -32,7 +32,7 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      appBar: AppBuilder.commonAppBar('导航'),
+      appBar: AppBarBuilder.commonAppBar('导航'),
       drawer: Drawer(
         child: MenuBuilder.menuDrawer(context)
       ),

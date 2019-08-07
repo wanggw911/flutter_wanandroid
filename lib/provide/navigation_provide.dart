@@ -22,6 +22,4 @@ class NavigationProvide with ChangeNotifier {
 
     notifyListeners();
   }
-
-
 }

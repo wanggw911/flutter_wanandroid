@@ -56,6 +56,22 @@ class Network {
     }
   }
 
+  //接口3.1：获取首页文章列表数据
+  static Future<List<Article>> getKnowledgeArticleList(int pageIndex, int cid) async {
+    var requestUrl = "https://www.wanandroid.com/article/list/$pageIndex/json?cid=$cid";
+    var client = http.Client();
+    http.Response response = await client.get(requestUrl);
+    debugLog(response);
+    if (response.statusCode == 200) {
+      var jsonString = json.decode(response.body);
+      ArticleRespond articleData = ArticleRespond.fromJson(jsonString);
+      return articleData.data.datas;
+    }
+    else {
+      return null;
+    }
+  }
+
   //接口4：获取导航模块的节点数据
   static Future<List<NavigationSuperNode>> getNavigationAllNodes() async {
     var requestUrl = "https://www.wanandroid.com/navi/json";

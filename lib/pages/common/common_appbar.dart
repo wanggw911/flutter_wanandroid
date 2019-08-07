@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-class AppBuilder {
+class AppBarBuilder {
   static Widget commonAppBar(String title) {
     return AppBar(
       title: Text('$title'),
