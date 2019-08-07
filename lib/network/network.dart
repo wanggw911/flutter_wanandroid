@@ -4,7 +4,8 @@ import 'package:flutter_wanandroid/model/knowledge_tree.dart';
 import 'package:flutter_wanandroid/model/navigation_tree.dart';
 import 'package:flutter_wanandroid/model/project_article.dart';
 import 'package:flutter_wanandroid/model/project_tree.dart';
-import 'package:http/http.dart'as http;
+import 'package:flutter_wanandroid/model/user.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_wanandroid/model/home_banner.dart';
 
 class Network {
@@ -121,6 +122,60 @@ class Network {
     }
   }
 
+  //接口7：登录 
+  static Future<User> loginAction(String username, String password) async {
+    var requestUrl = "https://www.wanandroid.com/user/login";
+    var params = Map<String, String>();
+    params["username"] = username;
+    params["password"] = password;
+
+    var client = http.Client();
+    http.Response response = await client.post(requestUrl, body: params);
+    debugLog(response);
+    if (response.statusCode == 200) {
+      var jsonString = json.decode(response.body);
+      UserLoginRespond respondData = UserLoginRespond.fromJson(jsonString);
+      return respondData.data;
+    }
+    else {
+      return null;
+    }
+  }
+
+  //接口8：注册 
+  static Future<User> registerAction(String username, String password) async {
+    var requestUrl = "https://www.wanandroid.com/user/register";
+    var params = Map<String, String>();
+    params["username"] = username;
+    params["password"] = password;
+    params["repassword"] = password;
+    
+    var client = http.Client();
+    http.Response response = await client.post(requestUrl, body: params);
+    debugLog(response);
+    if (response.statusCode == 200) {
+      var jsonString = json.decode(response.body);
+      UserLoginRespond respondData = UserLoginRespond.fromJson(jsonString);
+      return respondData.data;
+    }
+    else {
+      return null;
+    }
+  }
+
+  //接口8：退出登录
+  static Future<bool> loginOutAction() async {
+    var requestUrl = "https://www.wanandroid.com/user/logout/json";
+    var client = http.Client();
+    http.Response response = await client.get(requestUrl);
+    debugLog(response);
+    if (response.statusCode == 200) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 
   //debug print
   static debugLog(http.Response response) {

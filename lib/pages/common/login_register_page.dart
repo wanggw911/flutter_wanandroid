@@ -1,6 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_wanandroid/model/user.dart';
+import 'package:flutter_wanandroid/provide/user_provide.dart';
 import 'package:flutter_wanandroid/tools/tools.dart';
+import 'package:provide/provide.dart';
 
 enum PageType {
   login,
@@ -50,7 +53,6 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,        
@@ -64,7 +66,22 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
         ),
         actions: rightActions,
       ),
-      body: Container(
+      body: _content(),
+    );
+  }
+
+  Widget _content() {
+    return Provide<UserProvide>(builder: (context, child, value) {
+      User user = Provide.value<UserProvide>(context).user;
+      if (user != null) {
+        //不能立即跳转，需要延时一下，否则就会黑屏一闪而过
+        Future.delayed(Duration(seconds: 1), () {
+          print('login success');
+          Navigator.pop(context);
+        });
+      }
+    
+      return Container(
         decoration: BoxDecoration(color: Colors.white),
         child: GestureDetector(
           behavior: HitTestBehavior.translucent,
@@ -86,8 +103,8 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
             ],
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   Widget _inputContent(String placeholder, Icon icon, TextEditingController controller) {
@@ -146,7 +163,28 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
   }
 
   void _submitAction() {
-    //登录提交
+    //登录、注册提交
+    switch (widget.pageType) {
+      case PageType.login:
+        login();
+        break;
+      case PageType.register:
+        register();
+        break;
+      default: // Without this, you see a WARNING.
+        break;
+    }
+  }
 
+  Future login() async {
+    var username = _userNameTextController.text;
+    var password = _passwordTextController.text;
+    await Provide.value<UserProvide>(context).login(username, password);
+  }
+
+  Future register() async {
+    var username = _userNameTextController.text;
+    var password = _passwordTextController.text;
+    await Provide.value<UserProvide>(context).register(username, password);
   }
 }

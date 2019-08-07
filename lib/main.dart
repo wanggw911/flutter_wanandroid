@@ -4,6 +4,7 @@ import 'package:flutter_wanandroid/provide/home_provide.dart';
 import 'package:flutter_wanandroid/provide/knowledge_provide.dart';
 import 'package:flutter_wanandroid/provide/navigation_provide.dart';
 import 'package:flutter_wanandroid/provide/projects_provide.dart';
+import 'package:flutter_wanandroid/provide/user_provide.dart';
 import 'package:provide/provide.dart';
 
 void main() {
@@ -12,8 +13,9 @@ void main() {
       ..provide(Provider<HomeProvide>.value(HomeProvide()))
       ..provide(Provider<KnowledgeProvide>.value(KnowledgeProvide()))
       ..provide(Provider<NavigationProvide>.value(NavigationProvide()))
-      ..provide(Provider<ProjectProvide>.value(ProjectProvide()));
- 
+      ..provide(Provider<ProjectProvide>.value(ProjectProvide()))
+      ..provide(Provider<UserProvide>.value(UserProvide()));
+      
   return runApp(ProviderNode(
     providers: providers,
     child: MyApp(),
