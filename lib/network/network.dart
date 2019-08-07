@@ -10,11 +10,13 @@ import 'package:flutter_wanandroid/provide/user_provide.dart';
 import 'package:flutter_wanandroid/model/home_banner.dart';
 
 class Network {
+  //接口地址：https://www.wanandroid.com/blog/show/2
+
   //接口1：获取首页 banner 列表数据
   static Future<List<HomeBanner>> getHomeBannerList() async {
     var requestUrl = "https://www.wanandroid.com/banner/json";
     var client = http.Client();
-    http.Response response = await client.get(requestUrl, headers: _headers());
+    http.Response response = await client.get(requestUrl);
     debugLog(response);
     if (response.statusCode == 200) {
       var jsonString = json.decode(response.body);
@@ -175,6 +177,22 @@ class Network {
     }
     else {
       return false;
+    }
+  }
+
+  //接口10：收藏接口
+  static Future<List<Article>> getCollectionArticleList(int pageIndex) async {
+    var requestUrl = "https://www.wanandroid.com/article/list/$pageIndex/json";
+    var client = http.Client();
+    http.Response response = await client.get(requestUrl, headers: _headers());
+    debugLog(response);
+    if (response.statusCode == 200) {
+      var jsonString = json.decode(response.body);
+      ArticleRespond articleData = ArticleRespond.fromJson(jsonString);
+      return articleData.data.datas;
+    }
+    else {
+      return null;
     }
   }
 
