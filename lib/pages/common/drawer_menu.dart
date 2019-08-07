@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_wanandroid/pages/common/login_register_page.dart';
 
 class MenuBuilder {
   static Widget menuDrawer(BuildContext context) {
@@ -20,7 +21,13 @@ class MenuBuilder {
           ListTile(
             leading: Icon(Icons.favorite),
             title: Text('收藏'),
-            onTap: (){},
+            onTap: (){
+              Navigator.of(context).push(
+              MaterialPageRoute(builder: (BuildContext context) {
+                  return LoginRegisterPage(pageType: PageType.login,);
+                })
+              );
+            },
           ),
           ListTile(
             leading: Icon(Icons.settings),
