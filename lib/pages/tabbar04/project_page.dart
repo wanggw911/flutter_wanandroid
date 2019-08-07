@@ -4,7 +4,7 @@ import 'package:flutter_wanandroid/model/project_article.dart';
 import 'package:flutter_wanandroid/model/project_tree.dart';
 import 'package:flutter_wanandroid/pages/common/common_appbar.dart';
 import 'package:flutter_wanandroid/pages/common/drawer_menu.dart';
-import 'package:flutter_wanandroid/pages/common/web_detail.dart';
+import 'package:flutter_wanandroid/pages/common/web_detail_page.dart';
 import 'package:flutter_wanandroid/provide/projects_provide.dart';
 import 'package:flutter_wanandroid/tools/tools.dart';
 import 'package:provide/provide.dart';

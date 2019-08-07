@@ -7,7 +7,7 @@ import 'package:flutter_wanandroid/model/home_banner.dart';
 import 'package:flutter_wanandroid/pages/common/common_appbar.dart';
 import 'package:flutter_wanandroid/pages/common/common_list_cell.dart';
 import 'package:flutter_wanandroid/pages/common/drawer_menu.dart';
-import 'package:flutter_wanandroid/pages/common/web_detail.dart';
+import 'package:flutter_wanandroid/pages/common/web_detail_page.dart';
 import 'package:flutter_wanandroid/provide/home_provide.dart';
 import 'package:flutter_wanandroid/tools/tools.dart';
 import 'package:provide/provide.dart';

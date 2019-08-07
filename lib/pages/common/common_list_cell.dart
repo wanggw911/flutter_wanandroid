@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/model/home_article.dart';
-import 'package:flutter_wanandroid/pages/common/web_detail.dart';
+import 'package:flutter_wanandroid/pages/common/web_detail_page.dart';
 import 'package:flutter_wanandroid/tools/tools.dart';
 
 class CommonListCell {
