@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/pages/index_page.dart';
+import 'package:flutter_wanandroid/provide/collection_provide.dart';
 import 'package:flutter_wanandroid/provide/home_provide.dart';
 import 'package:flutter_wanandroid/provide/knowledge_provide.dart';
 import 'package:flutter_wanandroid/provide/navigation_provide.dart';
@@ -8,19 +9,23 @@ import 'package:flutter_wanandroid/provide/user_provide.dart';
 import 'package:provide/provide.dart';
 
 void main() {
+  return runApp(ProviderNode(
+    providers: appProviders(),
+    child: MyApp(),
+  ));
+}
+
+Providers appProviders() {
   //【项目初始化】之：Provide
   final providers = Providers()
       ..provide(Provider<HomeProvide>.value(HomeProvide()))
       ..provide(Provider<KnowledgeProvide>.value(KnowledgeProvide()))
       ..provide(Provider<NavigationProvide>.value(NavigationProvide()))
       ..provide(Provider<ProjectProvide>.value(ProjectProvide()))
-      ..provide(Provider<UserProvide>.value(UserProvide()));
-      
-  return runApp(ProviderNode(
-    providers: providers,
-    child: MyApp(),
-  ));
-} 
+      ..provide(Provider<UserProvide>.value(UserProvide()))
+      ..provide(Provider<CollectionProvide>.value(CollectionProvide()));
+    return providers;
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.

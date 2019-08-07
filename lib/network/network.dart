@@ -1,11 +1,12 @@
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/knowledge_tree.dart';
 import 'package:flutter_wanandroid/model/navigation_tree.dart';
 import 'package:flutter_wanandroid/model/project_article.dart';
 import 'package:flutter_wanandroid/model/project_tree.dart';
 import 'package:flutter_wanandroid/model/user.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_wanandroid/provide/user_provide.dart';
 import 'package:flutter_wanandroid/model/home_banner.dart';
 
 class Network {
@@ -13,7 +14,7 @@ class Network {
   static Future<List<HomeBanner>> getHomeBannerList() async {
     var requestUrl = "https://www.wanandroid.com/banner/json";
     var client = http.Client();
-    http.Response response = await client.get(requestUrl);
+    http.Response response = await client.get(requestUrl, headers: _headers());
     debugLog(response);
     if (response.statusCode == 200) {
       var jsonString = json.decode(response.body);
@@ -163,7 +164,7 @@ class Network {
     }
   }
 
-  //接口8：退出登录
+  //接口9：退出登录
   static Future<bool> loginOutAction() async {
     var requestUrl = "https://www.wanandroid.com/user/logout/json";
     var client = http.Client();
@@ -175,6 +176,18 @@ class Network {
     else {
       return false;
     }
+  }
+
+  //请求header
+  static Map<String, String> _headers() {
+    Map<String, String> header = Map<String, String>();
+    var user = UserProvide.currentUser;
+    if (user != null) {
+      var cookie = "loginUserName=${user.username}, loginUserPassword=${user.password}";
+      header["Cookie"] = cookie;
+    }
+    print('header = $header');
+    return header;
   }
 
   //debug print
