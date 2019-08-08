@@ -1,8 +1,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/model/home_article.dart';
+import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/pages/common/web_detail_page.dart';
+import 'package:flutter_wanandroid/provide/user_provide.dart';
 import 'package:flutter_wanandroid/tools/tools.dart';
+import 'package:provide/provide.dart';
 
 class CommonListCell {
   static Widget articleCell(BuildContext context, dynamic model) {
@@ -75,10 +78,7 @@ class CommonListCell {
                     padding: EdgeInsets.all(5.0),
                     child: Row(
                       children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.all(5.0),
-                          child: Icon(Icons.favorite, size: 25, color: Colors.grey[400]),
-                        ),
+                        _favoriteIcon(model),
                         Container(
                           padding: EdgeInsets.only(right: 5.0),
                           child: Icon(Icons.watch_later, size: 25, color: Colors.grey[400]),
@@ -95,6 +95,24 @@ class CommonListCell {
       ),
       ),
     );
+  }
+
+  static Widget _favoriteIcon(dynamic model) {
+    var color = Colors.grey[400];
+    User user = UserProvide.currentUser;
+    if (user != null && model is Article) {
+      Article article = model;
+      if (user.collectIds.contains(article.id)) {
+        color = Colors.blue;
+      }
+    }
+  
+    return Provide<UserProvide>(builder: (context, child, value) {
+      return Container(
+        padding: EdgeInsets.all(5.0),
+        child: Icon(Icons.favorite, size: 25, color: color),
+      );
+    });
   }
 
   static Widget _cellTags(dynamic model) {
