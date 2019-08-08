@@ -133,6 +133,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
             if (value.isEmpty) {
               return "Email can not be empty";
             }
+            return "";
           },
         ),
       ),

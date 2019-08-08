@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/pages/index_page.dart';
-import 'package:flutter_wanandroid/provide/collection_provide.dart';
 import 'package:flutter_wanandroid/provide/home_provide.dart';
 import 'package:flutter_wanandroid/provide/knowledge_provide.dart';
 import 'package:flutter_wanandroid/provide/navigation_provide.dart';
 import 'package:flutter_wanandroid/provide/projects_provide.dart';
+import 'package:flutter_wanandroid/provide/setting_provide.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
 import 'package:provide/provide.dart';
 
@@ -23,7 +23,8 @@ Providers appProviders() {
       ..provide(Provider<NavigationProvide>.value(NavigationProvide()))
       ..provide(Provider<ProjectProvide>.value(ProjectProvide()))
       ..provide(Provider<UserProvide>.value(UserProvide()))
-      ..provide(Provider<CollectionProvide>.value(CollectionProvide()));
+      ..provide(Provider<SettingProvide>.value(SettingProvide()));
+      
     return providers;
 }
 

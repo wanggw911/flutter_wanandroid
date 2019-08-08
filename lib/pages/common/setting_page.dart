@@ -1,6 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_wanandroid/provide/setting_provide.dart';
 import 'package:flutter_wanandroid/tools/tools.dart';
+import 'package:provide/provide.dart';
+
+typedef CheckBoxCallBack = void Function(bool);
 
 class SettingPage extends StatefulWidget {
   SettingPage({Key key}) : super(key: key);
@@ -38,77 +42,61 @@ class _SettingPageState extends State<SettingPage> {
   Widget _header(String title) {
     return Container(
       height: setHeight(80),
-      padding: EdgeInsets.only(left: 13),
+      padding: EdgeInsets.only(left: 15),
       alignment: Alignment.centerLeft,
       child: Text(title),
     );
   }
 
   Widget _commonSettingContent() {
-    return Container(
-      height: setHeight(300),
-      padding: EdgeInsets.only(left: 10, right: 10),
-      decoration: BoxDecoration(
-        // TODO: 设置圆角的好像没有生效，应该使用 card clipBehavior
-        borderRadius: BorderRadius.circular(10)
-      ),
-      child: Card(
-        child: ListView(
-          children: <Widget>[
-            Container(
-              height: setHeight(100),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(bottom: BorderSide(width: 1.0, color: Colors.grey[200])),
-              ),
-              child: Center(
-                child: ListTile(
-                  leading: Icon(Icons.file_download),
-                  title: Text('自动缓存'),
-                  trailing: Checkbox(
-                    value: true, 
-                    onChanged: (value) {
+    return Provide<SettingProvide>(builder: (context, child, value) {
+      bool autoCache = Provide.value<SettingProvide>(context).autoCache;
+      bool noPictures = Provide.value<SettingProvide>(context).noPictures;
+      bool nighttime = Provide.value<SettingProvide>(context).nighttime; 
+      return Container(
+        height: setHeight(300),
+        padding: EdgeInsets.only(left: 10, right: 10),
+        decoration: BoxDecoration(
+          // TODO: 设置圆角的好像没有生效，应该使用 card clipBehavior
+          borderRadius: BorderRadius.circular(10)
+        ),
+        child: Card(
+          child: ListView(
+            children: <Widget>[
+              _commonCell(Icon(Icons.file_download), '自动缓存', autoCache, true, (isCheck){
+                Provide.value<SettingProvide>(context).settingWith(SettingType.autoCache);
+              }),
+              _commonCell(Icon(Icons.image), '无图模式', noPictures, true, (isCheck){
+                Provide.value<SettingProvide>(context).settingWith(SettingType.noPictures);
+              }),
+              _commonCell(Icon(Icons.widgets), '夜间模式', nighttime, false, (isCheck){
+                Provide.value<SettingProvide>(context).settingWith(SettingType.nighttime);
+              }),
+            ],
+          ),
+        ),
+      );
+    });
+  }
 
-                    },  
-                  ),
-                ),
-              ),
-            ),
-            //Divider(),
-            Container(
-              height: setHeight(100),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(bottom: BorderSide(width: 1.0, color: Colors.grey[200])),
-              ),
-              child: Center(
-                child: ListTile(
-                  leading: Icon(Icons.image),
-                  title: Text('无图模式'),
-                  trailing: Checkbox(
-                    value: false, 
-                    onChanged: (value) {
-                      
-                    },  
-                  ),
-                ),
-              ),
-            ),
-            //Divider(),
-            Container(
-              height: setHeight(100),
-              child: ListTile(
-                leading: Icon(Icons.mood),
-                title: Text('夜间模式'),
-                trailing: Checkbox(
-                  value: false, 
-                  onChanged: (value) {
-                    
-                  },  
-                ),
-              ),
-            ),
-          ],
+  Widget _commonCell(Icon icon, String title, bool isCheck, bool addBottomLine, CheckBoxCallBack callBack) {
+    BoxDecoration boxDecoration = addBottomLine ? BoxDecoration(
+        color: Colors.white,
+        border: Border(bottom: BorderSide(width: 1.0, color: Colors.grey[200])),
+      ) : BoxDecoration();
+    return Container(
+      height: setHeight(100),
+      decoration: boxDecoration,
+      child: Center(
+        child: ListTile(
+          leading: icon,
+          title: Text(title),
+          trailing: Checkbox(
+            value: isCheck, 
+            onChanged: (value) {
+              callBack(value);
+            },  
+          ),
         ),
       ),
     );
