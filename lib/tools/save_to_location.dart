@@ -15,4 +15,12 @@ class DataHander {
   static String readStringWith(key) {
     return sharedInstance.getString(key);
   }
+
+  static saveBoolWith(key, value) {
+    sharedInstance.setBool(key, value);
+  }
+
+  static bool readBoolWith(key) {
+    return sharedInstance.getBool(key);
+  }
 }

@@ -13,6 +13,16 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_){ 
+      Provide.value<SettingProvide>(context).readLocationSetting();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
