@@ -6,7 +6,7 @@ import 'package:flutter_wanandroid/pages/common/common_appbar.dart';
 import 'package:flutter_wanandroid/pages/common/drawer_menu.dart';
 import 'package:flutter_wanandroid/pages/tabbar02/knowledge_second_page.dart';
 import 'package:flutter_wanandroid/provide/knowledge_provide.dart';
-import 'package:flutter_wanandroid/tools/tools.dart';
+import 'package:flutter_wanandroid/tools/uikit_help.dart';
 import 'package:provide/provide.dart';
 
 class KnowledgePage extends StatefulWidget {

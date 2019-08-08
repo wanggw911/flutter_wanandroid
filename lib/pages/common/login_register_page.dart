@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
 import 'package:flutter_wanandroid/tools/save_to_location.dart';
-import 'package:flutter_wanandroid/tools/tools.dart';
+import 'package:flutter_wanandroid/tools/uikit_help.dart';
 import 'package:provide/provide.dart';
 
 enum PageType {

@@ -7,7 +7,7 @@ import 'package:flutter_wanandroid/model/project_article.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/pages/common/login_register_page.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
-import 'package:flutter_wanandroid/tools/tools.dart';
+import 'package:flutter_wanandroid/tools/uikit_help.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:provide/provide.dart';
 

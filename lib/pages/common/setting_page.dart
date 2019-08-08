@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/provide/setting_provide.dart';
-import 'package:flutter_wanandroid/tools/tools.dart';
+import 'package:flutter_wanandroid/tools/uikit_help.dart';
 import 'package:provide/provide.dart';
 
 typedef CheckBoxCallBack = void Function(bool);
