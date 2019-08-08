@@ -114,7 +114,7 @@ class CommonListCell {
 
   static List<Widget> _articleCellTags(Article article) {
     List<Widget> widgets = [];
-    if (article.projectLink.length > 0) {
+    if (article.projectLink != null && article.projectLink.length > 0) {
       //添加项目标签Widget
       widgets.add(Container(
                     padding: EdgeInsets.only(left: 2.0, right: 2.0),
@@ -124,7 +124,7 @@ class CommonListCell {
                     ),
                   ));
     }
-    if (article.fresh) {
+    if (article.fresh !=  null && article.fresh) {
       //添加新旧Widget
       widgets.add(Container(
                     padding: EdgeInsets.only(left: 2.0, right: 2.0),

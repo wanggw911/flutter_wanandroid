@@ -180,9 +180,41 @@ class Network {
     }
   }
 
-  //接口10：收藏接口
+  //接口10：收藏列表接口
   static Future<List<Article>> getCollectionArticleList(int pageIndex) async {
-    var requestUrl = "https://www.wanandroid.com/article/list/$pageIndex/json";
+    var requestUrl = "https://www.wanandroid.com/lg/collect/list/$pageIndex/json";
+    var client = http.Client();
+    http.Response response = await client.get(requestUrl, headers: _headers());
+    debugLog(response);
+    if (response.statusCode == 200) {
+      var jsonString = json.decode(response.body);
+      ArticleRespond articleData = ArticleRespond.fromJson(jsonString);
+      return articleData.data.datas;
+    }
+    else {
+      return null;
+    }
+  }
+
+  //接口11：收藏接口
+  static Future<List<Article>> collectionArticle(int id) async {
+    var requestUrl = "https://www.wanandroid.com/lg/collect/$id/json";
+    var client = http.Client();
+    http.Response response = await client.get(requestUrl, headers: _headers());
+    debugLog(response);
+    if (response.statusCode == 200) {
+      var jsonString = json.decode(response.body);
+      ArticleRespond articleData = ArticleRespond.fromJson(jsonString);
+      return articleData.data.datas;
+    }
+    else {
+      return null;
+    }
+  }
+
+  //接口12：取消收藏接口
+  static Future<List<Article>> cancelCollectionArticle(int id) async {
+    var requestUrl = "https://www.wanandroid.com/lg/uncollect_originId/$id/json";
     var client = http.Client();
     http.Response response = await client.get(requestUrl, headers: _headers());
     debugLog(response);

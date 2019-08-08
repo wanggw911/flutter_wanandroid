@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/model/user.dart';
+import 'package:flutter_wanandroid/pages/common/collection_page.dart';
 import 'package:flutter_wanandroid/pages/common/login_register_page.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
 import 'package:provide/provide.dart';
@@ -37,8 +38,12 @@ class MenuBuilder {
         onTap: (){
           Navigator.of(context).push(
           MaterialPageRoute(builder: (BuildContext context) {
-              
-              return LoginRegisterPage(pageType: PageType.login,);
+              if (user != null) {
+                return CollectionPage();
+              } 
+              else {
+                return LoginRegisterPage(pageType: PageType.login,);
+              } 
             })
           );
         },

@@ -138,7 +138,7 @@ class Article {
     niceDate = json['niceDate'];
     origin = json['origin'];
     prefix = json['prefix'];
-    projectLink = json['projectLink'];
+    projectLink = json['projectLink'] ?? "";
     publishTime = json['publishTime'];
     superChapterId = json['superChapterId'];
     superChapterName = json['superChapterName'];
