@@ -6,9 +6,12 @@ import 'package:flutter_wanandroid/provide/navigation_provide.dart';
 import 'package:flutter_wanandroid/provide/projects_provide.dart';
 import 'package:flutter_wanandroid/provide/setting_provide.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
+import 'package:flutter_wanandroid/tools/save_to_location.dart';
 import 'package:provide/provide.dart';
 
 void main() {
+  DataHander.setup();
+
   return runApp(ProviderNode(
     providers: appProviders(),
     child: MyApp(),

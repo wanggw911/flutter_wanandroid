@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/network/network.dart';
+import 'package:flutter_wanandroid/tools/save_to_location.dart';
 
 class UserProvide with ChangeNotifier {
   static User currentUser;
@@ -16,6 +17,8 @@ class UserProvide with ChangeNotifier {
     UserProvide.currentUser.password = password;
     print('登录成功....');
     notifyListeners();
+
+    _saveAccountToLocation(username, password);
   }
 
   Future loginOut() async {
@@ -32,6 +35,8 @@ class UserProvide with ChangeNotifier {
     UserProvide.currentUser = user;
     print('注册成功....');
     notifyListeners();
+
+    _saveAccountToLocation(username, password);
   }
 
   //获取收藏的文章数据
@@ -72,5 +77,10 @@ class UserProvide with ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  void _saveAccountToLocation(String username, String password) {
+    DataHander.saveStringWith("username", username);
+    DataHander.saveStringWith("password", password);
   }
 }

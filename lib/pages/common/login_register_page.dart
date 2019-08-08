@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
+import 'package:flutter_wanandroid/tools/save_to_location.dart';
 import 'package:flutter_wanandroid/tools/tools.dart';
 import 'package:provide/provide.dart';
 
@@ -27,6 +28,10 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
   void initState() {
     super.initState();
 
+    WidgetsBinding.instance.addPostFrameCallback((_){ 
+      _readLocationAccount();
+    });
+  
     switch (widget.pageType) {
       case PageType.login:
         title = "登录";
@@ -109,7 +114,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
 
   Widget _inputContent(String placeholder, Icon icon, TextEditingController controller) {
     return Container(
-      width: setWidth(500),
+      width: setWidth(550),
       height: setHeight(80),
       decoration: BoxDecoration(
         border: Border(bottom: BorderSide(width: 1.0, color: Colors.grey[200])),
@@ -144,7 +149,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
     return Container(
       padding: EdgeInsets.only(top: 20),
       child: Container(
-        width: setWidth(500),
+        width: setWidth(550),
         height: setHeight(80),
         child: RaisedButton(
           color: Colors.blue,
@@ -161,6 +166,13 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
   void _hiddenKeyboard() {
     // 触摸收起键盘
     FocusScope.of(context).requestFocus(FocusNode());
+  }
+
+  void _readLocationAccount() {
+    setState(() {
+      _userNameTextController.text = DataHander.readStringWith("username");
+      _passwordTextController.text = DataHander.readStringWith("password");
+    });
   }
 
   void _submitAction() {
