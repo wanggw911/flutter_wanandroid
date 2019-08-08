@@ -197,34 +197,35 @@ class Network {
   }
 
   //接口11：收藏接口
-  static Future<List<Article>> collectionArticle(int id) async {
+  static Future<bool> collectionArticle(int id) async {
     var requestUrl = "https://www.wanandroid.com/lg/collect/$id/json";
     var client = http.Client();
-    http.Response response = await client.get(requestUrl, headers: _headers());
+    http.Response response = await client.post(requestUrl, headers: _headers());
     debugLog(response);
     if (response.statusCode == 200) {
-      var jsonString = json.decode(response.body);
-      ArticleRespond articleData = ArticleRespond.fromJson(jsonString);
-      return articleData.data.datas;
+      // var jsonString = json.decode(response.body);
+      // TODO: 请求到数据，怎么判断请求是否成功
+      return true;
     }
     else {
-      return null;
+      return false;
     }
   }
 
   //接口12：取消收藏接口
-  static Future<List<Article>> cancelCollectionArticle(int id) async {
+  static Future<bool> cancelCollectionArticle(int id) async {
     var requestUrl = "https://www.wanandroid.com/lg/uncollect_originId/$id/json";
     var client = http.Client();
-    http.Response response = await client.get(requestUrl, headers: _headers());
+    http.Response response = await client.post(requestUrl, headers: _headers());
     debugLog(response);
     if (response.statusCode == 200) {
-      var jsonString = json.decode(response.body);
-      ArticleRespond articleData = ArticleRespond.fromJson(jsonString);
-      return articleData.data.datas;
+      //var jsonString = json.decode(response.body);
+      //ArticleRespond articleData = ArticleRespond.fromJson(jsonString);
+      //return articleData.data.datas;
+      return true;
     }
     else {
-      return null;
+      return false;
     }
   }
 

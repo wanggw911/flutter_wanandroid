@@ -34,7 +34,7 @@ class UserProvide with ChangeNotifier {
     notifyListeners();
   }
 
-  //请求获取文章数据
+  //获取收藏的文章数据
   Future getCollectionArticleData(bool isRefresh) async {
     if (isRefresh) {
       collectionList.clear();
@@ -46,6 +46,30 @@ class UserProvide with ChangeNotifier {
 
     var list = await Network.getCollectionArticleList(_pageIndex);
     collectionList.addAll(list);
+
+    notifyListeners();
+  }
+
+  Future collectionArticle(int id) async {
+    bool isSuccess = await Network.collectionArticle(id);
+    if (isSuccess) {
+      // TODO: 怎么去刷新数据是一个问题
+      if (!UserProvide.currentUser.collectIds.contains(id)) {
+        UserProvide.currentUser.collectIds.add(id);
+      }
+    }
+
+    notifyListeners();
+  }
+
+  Future cancelCollectionArticle(int id) async {
+    bool isSuccess = await Network.cancelCollectionArticle(id);
+    if (isSuccess) {
+      // TODO: 怎么去刷新数据是一个问题
+      if (UserProvide.currentUser.collectIds.contains(id)) {
+        UserProvide.currentUser.collectIds.remove(id);
+      }
+    }
 
     notifyListeners();
   }

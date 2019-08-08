@@ -52,9 +52,9 @@ class User {
     username = json['username'];
     password = json['password'];
     admin = json['admin'];
-    if (json['datas'] != null) {
+    if (json['collectIds'] != null) {
       collectIds = List<int>();
-      json['datas'].forEach((v) {
+      json['collectIds'].forEach((v) {
         collectIds.add(v);
       });
     }
