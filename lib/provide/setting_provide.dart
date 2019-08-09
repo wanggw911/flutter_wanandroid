@@ -15,7 +15,7 @@ class SettingProvide with ChangeNotifier {
   bool nighttime = false;
 
   ThemeData get themeData {
-    print('App初始化，夜间模式：${nighttime ? '开启' : '关闭'}');
+    //print('App初始化，夜间模式：${nighttime ? '开启' : '关闭'}');
     return nighttime ? kiOSDarkTheme : kiOSNormalTheme;
   } 
 

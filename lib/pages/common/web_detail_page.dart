@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/home_banner.dart';
@@ -57,12 +58,14 @@ class _WebDetailPageState extends State<WebDetailPage> {
   Widget build(BuildContext context) {
     return Provide<UserProvide>(builder: (context, child, value) {
       //User user = Provide.value<UserProvide>(context).user;
-      return WebviewScaffold(
-        url: urlString,
+      return Scaffold(
         appBar: _navigationBar(),
-        withZoom: true, // 允许网页缩放
-        withLocalStorage: true, // 允许LocalStorage
-        withJavascript: true, // 允许执行js代码
+        body: WebviewScaffold(
+          url: urlString,
+          withZoom: true, // 允许网页缩放
+          withLocalStorage: true, // 允许LocalStorage
+          withJavascript: true, // 允许执行js代码
+        ),
       );
     });
   }
@@ -125,12 +128,21 @@ class _WebDetailPageState extends State<WebDetailPage> {
   void _collectionOrNotAction() {
     User _currentUser = UserProvide.currentUser;
     if (_currentUser == null) {
-      // TODO: 跳转有问题
+      // TODO: 跳转有问题，push有问题，登录界面的内容不能展示出来
       Navigator.of(context).push(
         MaterialPageRoute(builder: (BuildContext context) {
           return LoginRegisterPage(pageType: PageType.login,);
         })
       );
+      // TODO: 跳转有问题，换成present方式，还是一样
+      // Navigator.of(context).push(
+      //   CupertinoPageRoute(
+      //     fullscreenDialog: true,
+      //     builder: (context) {
+      //       return LoginRegisterPage(pageType: PageType.login);
+      //     }
+      //   )
+      // );
       return;
     }
 
