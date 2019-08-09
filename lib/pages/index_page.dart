@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_wanandroid/pages/tabbar01/home_page.dart';
 import 'package:flutter_wanandroid/pages/tabbar02/knowledge_page.dart';
 import 'package:flutter_wanandroid/pages/tabbar03/navigation_page.dart';
@@ -51,6 +52,8 @@ class _IndexPageState extends State<IndexPage> {
 
   @override
   Widget build(BuildContext context) {
+    //设置之后，黑色又变成白色
+    //SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     return Scaffold(
        backgroundColor: Color.fromRGBO(245, 245, 245, 1.0),
        bottomNavigationBar: BottomNavigationBar(

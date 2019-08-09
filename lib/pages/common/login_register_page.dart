@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
 import 'package:flutter_wanandroid/tools/CustomTheme.dart';
@@ -24,6 +26,12 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
   List<Widget> rightActions = [];
   final _userNameTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
+
+  @override
+  void dispose() {
+    FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -59,21 +67,29 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    //设置状态栏文字为黑色
+    FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
+    //设置整个状态栏的背景颜色
+    //FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+    //下面的设置都没有任何作用
+    //SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.black));
+    //SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: LoginPageTheme.navigationColor(context),
-        elevation: 0, //去掉导航栏下面的阴影
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.blue,),
-          onPressed: (){
-            _hiddenKeyboard();
-            Navigator.pop(context);
-          },
+        appBar: AppBar(
+          //brightness: Brightness.dark,//设置状态栏为黑色
+          backgroundColor: LoginPageTheme.navigationColor(context),
+          elevation: 0, //去掉导航栏下面的阴影
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.blue,),
+            onPressed: (){
+              _hiddenKeyboard();
+              Navigator.pop(context);
+            },
+          ),
+          actions: rightActions,
         ),
-        actions: rightActions,
-      ),
-      body: _content(),
-    );
+        body: _content(),
+      );
   }
 
   Widget _content() {
