@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class DataHander {
   static SharedPreferences sharedInstance;
 
-  static setup() async {
+  static Future setup() async {
     sharedInstance = await SharedPreferences.getInstance();
   }
 
@@ -20,7 +20,11 @@ class DataHander {
     sharedInstance.setBool(key, value);
   }
 
-  static bool readBoolWith(key) {
-    return sharedInstance.getBool(key);
+  static Future<bool> readBoolWith(key) async {
+    if (sharedInstance == null) {
+      sharedInstance = await SharedPreferences.getInstance();
+    }
+    bool value = sharedInstance.getBool(key);
+    return value == null ? false : value;
   }
 }

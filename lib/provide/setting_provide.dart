@@ -14,7 +14,10 @@ class SettingProvide with ChangeNotifier {
   bool noPictures = false;
   bool nighttime = false;
 
-  ThemeData themeData = kiOSNormalTheme;
+  ThemeData get themeData {
+    print('App初始化，夜间模式：${nighttime ? '开启' : '关闭'}');
+    return nighttime ? kiOSDarkTheme : kiOSNormalTheme;
+  } 
 
   void settingWith(SettingType type) {
     switch (type) {
@@ -32,7 +35,7 @@ class SettingProvide with ChangeNotifier {
         nighttime = !nighttime;
         DataHander.saveBoolWith("nighttime", nighttime);
         print('设置，夜间模式：${nighttime ? '开启' : '关闭'}');
-        themeData = nighttime ? kiOSDarkTheme : kiOSNormalTheme;
+        //themeData = nighttime ? kiOSDarkTheme : kiOSNormalTheme;
         break;
       default: // Without this, you see a WARNING.
         break;
@@ -41,16 +44,16 @@ class SettingProvide with ChangeNotifier {
     notifyListeners();
   }
 
-  void readLocationSetting() {
-    bool _autoCache = DataHander.readBoolWith("autoCache");
+  Future readLocationSetting() async {
+    bool _autoCache = await DataHander.readBoolWith("autoCache");
     if (_autoCache != null) {
       autoCache = _autoCache;
     }
-    bool _noPictures = DataHander.readBoolWith("noPictures");
+    bool _noPictures = await DataHander.readBoolWith("noPictures");
     if (_noPictures != null) {
       noPictures = _noPictures;
     }
-    bool _nighttime = DataHander.readBoolWith("nighttime");
+    bool _nighttime = await DataHander.readBoolWith("nighttime");
     if (_nighttime != null) {
       nighttime = _nighttime;
     }

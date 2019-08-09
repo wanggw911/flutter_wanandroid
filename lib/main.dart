@@ -6,12 +6,11 @@ import 'package:flutter_wanandroid/provide/navigation_provide.dart';
 import 'package:flutter_wanandroid/provide/projects_provide.dart';
 import 'package:flutter_wanandroid/provide/setting_provide.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
-import 'package:flutter_wanandroid/tools/CustomTheme.dart';
 import 'package:flutter_wanandroid/tools/save_to_location.dart';
 import 'package:provide/provide.dart';
 
 void main() {
-  DataHander.setup();
+   DataHander.setup();
 
   return runApp(ProviderNode(
     providers: appProviders(),
@@ -21,13 +20,16 @@ void main() {
 
 Providers appProviders() {
   //【项目初始化】之：Provide
+  SettingProvide settingProvide = SettingProvide();
+  settingProvide.readLocationSetting();
+
   final providers = Providers()
       ..provide(Provider<HomeProvide>.value(HomeProvide()))
       ..provide(Provider<KnowledgeProvide>.value(KnowledgeProvide()))
       ..provide(Provider<NavigationProvide>.value(NavigationProvide()))
       ..provide(Provider<ProjectProvide>.value(ProjectProvide()))
       ..provide(Provider<UserProvide>.value(UserProvide()))
-      ..provide(Provider<SettingProvide>.value(SettingProvide()));
+      ..provide(Provider<SettingProvide>.value(settingProvide));
       
     return providers;
 }
