@@ -26,8 +26,9 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(title: Text('设置'),),
-       body: _settingContent(),
+      appBar: AppBar(title: Text('设置'),),
+      body: _settingContent(),
+      // body: _testContent(),
     );
   }
 
@@ -65,15 +66,13 @@ class _SettingPageState extends State<SettingPage> {
       bool noPictures = Provide.value<SettingProvide>(context).noPictures;
       bool nighttime = Provide.value<SettingProvide>(context).nighttime; 
       return Container(
-        height: setHeight(300),
         padding: EdgeInsets.only(left: 10, right: 10),
         decoration: BoxDecoration(
           // TODO: 设置圆角的好像没有生效，应该使用 card clipBehavior
           borderRadius: BorderRadius.circular(10)
         ),
         child: Card(
-          child: ListView(
-            physics: NeverScrollableScrollPhysics(),
+          child: Column(
             children: <Widget>[
               _commonCell(Icon(Icons.file_download), '自动缓存', autoCache, true, (isCheck){
                 Provide.value<SettingProvide>(context).settingWith(SettingType.autoCache);
@@ -85,7 +84,7 @@ class _SettingPageState extends State<SettingPage> {
                 Provide.value<SettingProvide>(context).settingWith(SettingType.nighttime);
               }),
             ],
-          ),
+          )
         ),
       );
     });
@@ -116,15 +115,13 @@ class _SettingPageState extends State<SettingPage> {
 
   Widget _otherSettingContent() {
     return Container(
-      height: setHeight(200),
       padding: EdgeInsets.only(left: 10, right: 10),
       decoration: BoxDecoration(
         // TODO: 设置圆角的好像没有生效，应该使用 card clipBehavior
         borderRadius: BorderRadius.circular(10)
       ),
       child: Card(
-        child: ListView(
-          physics: NeverScrollableScrollPhysics(),
+        child: Column(
           children: <Widget>[
             Container(
               height: setHeight(100),
@@ -155,5 +152,4 @@ class _SettingPageState extends State<SettingPage> {
       ),
     );
   }
-  
 }
