@@ -4,6 +4,7 @@ import 'package:flutter_wanandroid/pages/common/common_appbar.dart';
 import 'package:flutter_wanandroid/pages/common/drawer_menu.dart';
 import 'package:flutter_wanandroid/pages/common/web_detail_page.dart';
 import 'package:flutter_wanandroid/provide/navigation_provide.dart';
+import 'package:flutter_wanandroid/tools/CustomTheme.dart';
 import 'package:flutter_wanandroid/tools/uikit_help.dart';
 import 'package:provide/provide.dart';
 
@@ -77,13 +78,17 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
       child: Container(
         height: setHeight(100),
         decoration: BoxDecoration(
-          color: isSelect?Colors.white:Colors.grey[200],
+          color: isSelect? 
+            NavigationPageTheme.leftCellSelectBGColor(context) :
+            NavigationPageTheme.leftCellNormalBGColor(context),
         ),
         child: Center(
           child: Text(
             '${leftNode.name}',
             style: TextStyle(
-              color: isSelect?Colors.green:Colors.black,
+              color: isSelect? 
+                NavigationPageTheme.leftCellSelectTitleColor(context) :
+                NavigationPageTheme.leftCellNormalTitleColor(context),
             ),
           ),
         ),
@@ -150,10 +155,12 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
           child: Container(
             padding: EdgeInsets.only(top:10, bottom: 10, left: 20, right: 20),
             decoration: BoxDecoration(
-              color: Colors.grey[200],
+              color: NavigationPageTheme.rightItemBGColor(context),
               borderRadius: BorderRadius.circular(30.0),
             ),
-            child: Text('${subNode.title}'),
+            child: Text(
+              '${subNode.title}',
+              style: TextStyle(color: NavigationPageTheme.rightItemTitleColor(context)),),
           ),
         );
       });

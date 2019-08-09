@@ -35,7 +35,8 @@ class _SettingPageState extends State<SettingPage> {
     return Container(
       width: setWidth(750),
       height: setHeight(1334),
-      decoration: BoxDecoration(color: Colors.grey[200]),
+      //能不设置颜色就不设置颜色
+      //decoration: BoxDecoration(color: Colors.grey[200]),
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -72,6 +73,7 @@ class _SettingPageState extends State<SettingPage> {
         ),
         child: Card(
           child: ListView(
+            physics: NeverScrollableScrollPhysics(),
             children: <Widget>[
               _commonCell(Icon(Icons.file_download), '自动缓存', autoCache, true, (isCheck){
                 Provide.value<SettingProvide>(context).settingWith(SettingType.autoCache);
@@ -91,7 +93,7 @@ class _SettingPageState extends State<SettingPage> {
 
   Widget _commonCell(Icon icon, String title, bool isCheck, bool addBottomLine, CheckBoxCallBack callBack) {
     BoxDecoration boxDecoration = addBottomLine ? BoxDecoration(
-        color: Colors.white,
+        //color: Colors.white,
         border: Border(bottom: BorderSide(width: 1.0, color: Colors.grey[200])),
       ) : BoxDecoration();
     return Container(
@@ -122,11 +124,12 @@ class _SettingPageState extends State<SettingPage> {
       ),
       child: Card(
         child: ListView(
+          physics: NeverScrollableScrollPhysics(),
           children: <Widget>[
             Container(
               height: setHeight(100),
               decoration: BoxDecoration(
-                color: Colors.white,
+                //color: Colors.white,
                 border: Border(bottom: BorderSide(width: 1.0, color: Colors.grey[200])),
               ),
               child: Center(

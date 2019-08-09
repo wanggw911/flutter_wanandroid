@@ -132,7 +132,8 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
       return Expanded(
       child: Container(
         //decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.red)), //use for debug frame
-        decoration: BoxDecoration(color: Colors.grey[200],),
+        //避免自己设置背景色，而导致无法进行自动适配
+        //decoration: BoxDecoration(color: Colors.grey[200],),
         padding: EdgeInsets.only(left: 10, right: 10),
         child: EasyRefresh(
           key: _easyRefreshKey,

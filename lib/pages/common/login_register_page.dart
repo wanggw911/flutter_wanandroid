@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
+import 'package:flutter_wanandroid/tools/CustomTheme.dart';
 import 'package:flutter_wanandroid/tools/save_to_location.dart';
 import 'package:flutter_wanandroid/tools/uikit_help.dart';
 import 'package:provide/provide.dart';
@@ -60,7 +61,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,        
+        backgroundColor: LoginPageTheme.navigationColor(context),
         elevation: 0, //去掉导航栏下面的阴影
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.blue,),
@@ -87,7 +88,8 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
       }
     
       return Container(
-        decoration: BoxDecoration(color: Colors.white),
+        //decoration: BoxDecoration(color: Colors.white),
+        //添加点击手势收键盘
         child: GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: () {
@@ -133,7 +135,10 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
             border: InputBorder.none
             //border: InputBorder(borderSide: BorderSide(width: 1, color: ))
           ),
-          style: TextStyle(fontSize: setFontSize(30), color: Colors.black),
+          style: TextStyle(
+            fontSize: setFontSize(30), 
+            color: LoginPageTheme.inputTextColor(context),
+          ),
           validator: (value) {
             if (value.isEmpty) {
               return "Email can not be empty";

@@ -67,7 +67,7 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
 
   Widget _nodeCell(KnowledgeTreeNode node) {
     return Container(
-      padding: EdgeInsets.only(top: 5.0, left: 10.0, bottom: 5.0, right: 10.0),
+      padding: EdgeInsets.only(top: 5.0, left: 10.0, bottom: 0, right: 10.0),
       child: InkWell(
         onTap: (){
           //页面跳转: KnowledgeSecondPage 
