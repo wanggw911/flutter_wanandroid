@@ -136,6 +136,7 @@ class CommonListCell {
       //添加项目标签Widget
       widgets.add(Container(
                     padding: EdgeInsets.only(left: 2.0, right: 2.0),
+                    margin: EdgeInsets.all(5.0),
                     child: Text('项目', style: TextStyle(color: Colors.red)),
                     decoration: BoxDecoration(
                       border: Border.all(width: 1.0, color: Colors.red)

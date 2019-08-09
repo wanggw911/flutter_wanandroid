@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_wanandroid/tools/CustomTheme.dart';
 import 'package:flutter_wanandroid/tools/save_to_location.dart';
 
 enum SettingType {
@@ -12,6 +13,8 @@ class SettingProvide with ChangeNotifier {
   bool autoCache = true;
   bool noPictures = false;
   bool nighttime = false;
+
+  ThemeData themeData = kiOSNormalTheme;
 
   void settingWith(SettingType type) {
     switch (type) {
@@ -29,6 +32,7 @@ class SettingProvide with ChangeNotifier {
         nighttime = !nighttime;
         DataHander.saveBoolWith("nighttime", nighttime);
         print('设置，夜间模式：${nighttime ? '开启' : '关闭'}');
+        themeData = nighttime ? kiOSDarkTheme : kiOSNormalTheme;
         break;
       default: // Without this, you see a WARNING.
         break;

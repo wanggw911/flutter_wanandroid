@@ -6,6 +6,7 @@ import 'package:flutter_wanandroid/provide/navigation_provide.dart';
 import 'package:flutter_wanandroid/provide/projects_provide.dart';
 import 'package:flutter_wanandroid/provide/setting_provide.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
+import 'package:flutter_wanandroid/tools/CustomTheme.dart';
 import 'package:flutter_wanandroid/tools/save_to_location.dart';
 import 'package:provide/provide.dart';
 
@@ -32,16 +33,16 @@ Providers appProviders() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: IndexPage(),
-    );
+    return Provide<SettingProvide>(builder: (context, child, value) {
+      ThemeData themeData = Provide.value<SettingProvide>(context).themeData;
+      return MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: themeData,
+        home: IndexPage(),
+      );
+    });
   }
 }
