@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'package:flutter_wanandroid/network/engine.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/knowledge_tree.dart';
@@ -9,119 +9,120 @@ import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
 import 'package:flutter_wanandroid/model/home_banner.dart';
 
-class Network {
-  //接口地址：https://www.wanandroid.com/blog/show/2
 
+//[玩Android接口地址](https://www.wanandroid.com/blog/show/2)
+class Network {
   //接口1：获取首页 banner 列表数据
   static Future<List<HomeBanner>> getHomeBannerList() async {
     var requestUrl = "https://www.wanandroid.com/banner/json";
-    var client = http.Client();
-    http.Response response = await client.get(requestUrl);
-    debugLog(response);
-    if (response.statusCode == 200) {
-      var jsonString = json.decode(response.body);
-      HomeBannerRespond bannerData = HomeBannerRespond.fromJson(jsonString);
-      return bannerData.data;
+    EngineCallBack callBack = await Engine.get(requestUrl);
+    var data = callBack.data;
+    if (data != null && data is List) {
+      List<HomeBanner> list = List<HomeBanner>();
+      data.forEach((item) {
+        HomeBanner banner = HomeBanner.fromJson(item);
+        list.add(banner);
+      });
+      return list;
     }
     else {
-      return null;
+      return [];
     }
   }
 
   //接口2：获取首页文章列表数据
   static Future<List<Article>> getHomeArticleList(int pageIndex) async {
     var requestUrl = "https://www.wanandroid.com/article/list/$pageIndex/json";
-    var client = http.Client();
-    http.Response response = await client.get(requestUrl);
-    debugLog(response);
-    if (response.statusCode == 200) {
-      var jsonString = json.decode(response.body);
-      ArticleRespond articleData = ArticleRespond.fromJson(jsonString);
-      return articleData.data.datas;
+    EngineCallBack callBack = await Engine.get(requestUrl);
+    var data = callBack.data;
+    if (data != null) {
+      ArticleData articleData = ArticleData.fromJson(data);
+      return articleData.datas;
     }
     else {
-      return null;
+      return [];
     }
   }
 
   //接口3：获取知识体系的所有节点数据 
   static Future<List<KnowledgeTreeNode>> getKnowledgeAllNodes() async {
     var requestUrl = "https://www.wanandroid.com/tree/json";
-    var client = http.Client();
-    http.Response response = await client.get(requestUrl);
-    debugLog(response);
-    if (response.statusCode == 200) {
-      var jsonString = json.decode(response.body);
-      KnowledgeTreeNodeRespond articleData = KnowledgeTreeNodeRespond.fromJson(jsonString);
-      return articleData.data;
+    EngineCallBack callBack = await Engine.get(requestUrl);
+    var data = callBack.data;
+    if (data != null && data is List) {
+      List<KnowledgeTreeNode> list = List<KnowledgeTreeNode>();
+      data.forEach((item) {
+        KnowledgeTreeNode banner = KnowledgeTreeNode.fromJson(item);
+        list.add(banner);
+      });
+      return list;
     }
     else {
-      return null;
+      return [];
     }
   }
 
-  //接口3.1：获取首页文章列表数据
+  //接口3.1：获取知识体系文章列表数据
   static Future<List<Article>> getKnowledgeArticleList(int pageIndex, int cid) async {
     var requestUrl = "https://www.wanandroid.com/article/list/$pageIndex/json?cid=$cid";
-    var client = http.Client();
-    http.Response response = await client.get(requestUrl);
-    debugLog(response);
-    if (response.statusCode == 200) {
-      var jsonString = json.decode(response.body);
-      ArticleRespond articleData = ArticleRespond.fromJson(jsonString);
-      return articleData.data.datas;
+    EngineCallBack callBack = await Engine.get(requestUrl);
+    var data = callBack.data;
+    if (data != null) {
+      ArticleData articleData = ArticleData.fromJson(data);
+      return articleData.datas;
     }
     else {
-      return null;
+      return [];
     }
   }
 
   //接口4：获取导航模块的节点数据
   static Future<List<NavigationSuperNode>> getNavigationAllNodes() async {
     var requestUrl = "https://www.wanandroid.com/navi/json";
-    var client = http.Client();
-    http.Response response = await client.get(requestUrl);
-    debugLog(response);
-    if (response.statusCode == 200) {
-      var jsonString = json.decode(response.body);
-      NavigationTreeNodeRespond respondData = NavigationTreeNodeRespond.fromJson(jsonString);
-      return respondData.data;
+    EngineCallBack callBack = await Engine.get(requestUrl);
+    var data = callBack.data;
+    if (data != null && data is List) {
+      List<NavigationSuperNode> list = List<NavigationSuperNode>();
+      data.forEach((item) {
+        NavigationSuperNode banner = NavigationSuperNode.fromJson(item);
+        list.add(banner);
+      });
+      return list;
     }
     else {
-      return null;
+      return [];
     }
   }
  
   //接口5：获取项目分类的列表
   static Future<List<ProjectNode>> getProjectTypes() async {
     var requestUrl = "https://www.wanandroid.com/project/tree/json";
-    var client = http.Client();
-    http.Response response = await client.get(requestUrl);
-    debugLog(response);
-    if (response.statusCode == 200) {
-      var jsonString = json.decode(response.body);
-      ProjectTreeNodeRespond respondData = ProjectTreeNodeRespond.fromJson(jsonString);
-      return respondData.data;
+    EngineCallBack callBack = await Engine.get(requestUrl);
+    var data = callBack.data;
+    if (data != null && data is List) {
+      List<ProjectNode> list = List<ProjectNode>();
+      data.forEach((item) {
+        ProjectNode banner = ProjectNode.fromJson(item);
+        list.add(banner);
+      });
+      return list;
     }
     else {
-      return null;
+      return [];
     }
   }
 
-  //接口6：获取项目分类的文章列表  
+  //接口6：获取项目分类的文章列表，页码：拼接在链接中，从1开始。cid 分类的id，上面项目分类接口
   static Future<List<ProjectArticle>> getProjectArticleList(int index, int nodeid) async {
-    //页码：拼接在链接中，从1开始。cid 分类的id，上面项目分类接口
     var requestUrl = "https://www.wanandroid.com/project/list/$index/json?cid=$nodeid";
-    var client = http.Client();
-    http.Response response = await client.get(requestUrl);
-    debugLog(response);
-    if (response.statusCode == 200) {
-      var jsonString = json.decode(response.body);
-      ProjectArticleRespond respondData = ProjectArticleRespond.fromJson(jsonString);
-      return respondData.data.datas;
+    EngineCallBack callBack = await Engine.get(requestUrl);
+    var data = callBack.data;
+    if (data != null) {
+      ProjectArticleData articleData = ProjectArticleData.fromJson(data);
+      return articleData.datas;
     }
     else {
-      return null;
+      return [];
     }
   }
 
@@ -132,13 +133,11 @@ class Network {
     params["username"] = username;
     params["password"] = password;
 
-    var client = http.Client();
-    http.Response response = await client.post(requestUrl, body: params);
-    debugLog(response);
-    if (response.statusCode == 200) {
-      var jsonString = json.decode(response.body);
-      UserLoginRespond respondData = UserLoginRespond.fromJson(jsonString);
-      return respondData.data;
+    EngineCallBack callBack = await Engine.post(requestUrl, params: params);
+    var data = callBack.data;
+    if (data != null) {
+      User user = User.fromJson(data);
+      return user;
     }
     else {
       return null;
@@ -153,13 +152,11 @@ class Network {
     params["password"] = password;
     params["repassword"] = password;
     
-    var client = http.Client();
-    http.Response response = await client.post(requestUrl, body: params);
-    debugLog(response);
-    if (response.statusCode == 200) {
-      var jsonString = json.decode(response.body);
-      UserLoginRespond respondData = UserLoginRespond.fromJson(jsonString);
-      return respondData.data;
+    EngineCallBack callBack = await Engine.post(requestUrl, params: params);
+    var data = callBack.data;
+    if (data != null) {
+      User user = User.fromJson(data);
+      return user;
     }
     else {
       return null;
@@ -169,10 +166,8 @@ class Network {
   //接口9：退出登录
   static Future<bool> loginOutAction() async {
     var requestUrl = "https://www.wanandroid.com/user/logout/json";
-    var client = http.Client();
-    http.Response response = await client.get(requestUrl);
-    debugLog(response);
-    if (response.statusCode == 200) {
+    EngineCallBack callBack = await Engine.get(requestUrl);
+    if (callBack.errorInfo == null) {
       return true;
     }
     else {
@@ -183,28 +178,22 @@ class Network {
   //接口10：收藏列表接口
   static Future<List<Article>> getCollectionArticleList(int pageIndex) async {
     var requestUrl = "https://www.wanandroid.com/lg/collect/list/$pageIndex/json";
-    var client = http.Client();
-    http.Response response = await client.get(requestUrl, headers: _headers());
-    debugLog(response);
-    if (response.statusCode == 200) {
-      var jsonString = json.decode(response.body);
-      ArticleRespond articleData = ArticleRespond.fromJson(jsonString);
-      return articleData.data.datas;
+    EngineCallBack callBack = await Engine.get(requestUrl, headers: _headers());
+    var data = callBack.data;
+    if (data != null) {
+      ArticleData articleData = ArticleData.fromJson(data);
+      return articleData.datas;
     }
     else {
-      return null;
+      return [];
     }
   }
 
   //接口11：收藏接口
   static Future<bool> collectionArticle(int id) async {
     var requestUrl = "https://www.wanandroid.com/lg/collect/$id/json";
-    var client = http.Client();
-    http.Response response = await client.post(requestUrl, headers: _headers());
-    debugLog(response);
-    if (response.statusCode == 200) {
-      // var jsonString = json.decode(response.body);
-      // TODO: 请求到数据，怎么判断请求是否成功
+    EngineCallBack callBack = await Engine.post(requestUrl, headers: _headers());
+    if (callBack.errorInfo == null) {
       return true;
     }
     else {
@@ -215,13 +204,8 @@ class Network {
   //接口12：取消收藏接口
   static Future<bool> cancelCollectionArticle(int id) async {
     var requestUrl = "https://www.wanandroid.com/lg/uncollect_originId/$id/json";
-    var client = http.Client();
-    http.Response response = await client.post(requestUrl, headers: _headers());
-    debugLog(response);
-    if (response.statusCode == 200) {
-      //var jsonString = json.decode(response.body);
-      //ArticleRespond articleData = ArticleRespond.fromJson(jsonString);
-      //return articleData.data.datas;
+    EngineCallBack callBack = await Engine.post(requestUrl, headers: _headers());
+    if (callBack.errorInfo == null) {
       return true;
     }
     else {
