@@ -129,9 +129,8 @@ class _WebDetailPageState extends State<WebDetailPage> {
   void _collectionOrNotAction() {
     User _currentUser = UserProvide.currentUser;
     if (_currentUser == null) {
-      // TODO: 跳转有问题，push有问题，登录界面的内容不能展示出来
+      // TODO: 跳转有问题，无论是push，还是present，跳转后的登录界面不能展示内容
       NavigatorTool.push(context, LoginRegisterPage(pageType: PageType.login));
-      // TODO: 跳转有问题，换成present方式，还是一样
       //NavigatorTool.present(context, LoginRegisterPage(pageType: PageType.login));
       return;
     }

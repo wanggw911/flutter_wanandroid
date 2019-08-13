@@ -44,7 +44,7 @@ class _SettingPageState extends State<SettingPage> {
             _header('通用设置'),
             _commonSettingContent(),
             _header('其他设置'),
-            _otherSettingContent()
+            _otherSettingContent(),
           ],
         ),
       ),
@@ -66,10 +66,11 @@ class _SettingPageState extends State<SettingPage> {
       bool noPictures = Provide.value<SettingProvide>(context).noPictures;
       bool nighttime = Provide.value<SettingProvide>(context).nighttime; 
       return Container(
+        //height: setHeight(300), //设置了高度，里面的内容高度就不准确了😂
         padding: EdgeInsets.only(left: 10, right: 10),
         decoration: BoxDecoration(
           // TODO: 设置圆角的好像没有生效，应该使用 card clipBehavior
-          borderRadius: BorderRadius.circular(10)
+          //borderRadius: BorderRadius.all(Radius.circular(20.0))
         ),
         child: Card(
           child: Column(
@@ -117,7 +118,6 @@ class _SettingPageState extends State<SettingPage> {
     return Container(
       padding: EdgeInsets.only(left: 10, right: 10),
       decoration: BoxDecoration(
-        // TODO: 设置圆角的好像没有生效，应该使用 card clipBehavior
         borderRadius: BorderRadius.circular(10)
       ),
       child: Card(

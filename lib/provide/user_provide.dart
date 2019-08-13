@@ -68,7 +68,7 @@ class UserProvide with ChangeNotifier {
   Future collectionArticle(int id) async {
     bool isSuccess = await Network.collectionArticle(id);
     if (isSuccess) {
-      // TODO: 怎么去刷新数据是一个问题
+      // user 改变了，就会通知相应的 widget 节点刷新
       if (!UserProvide.currentUser.collectIds.contains(id)) {
         UserProvide.currentUser.collectIds.add(id);
       }
@@ -80,7 +80,6 @@ class UserProvide with ChangeNotifier {
   Future cancelCollectionArticle(int id) async {
     bool isSuccess = await Network.cancelCollectionArticle(id);
     if (isSuccess) {
-      // TODO: 怎么去刷新数据是一个问题
       if (UserProvide.currentUser.collectIds.contains(id)) {
         UserProvide.currentUser.collectIds.remove(id);
       }
