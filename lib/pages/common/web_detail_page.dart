@@ -8,6 +8,7 @@ import 'package:flutter_wanandroid/model/project_article.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/pages/common/login_register_page.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
+import 'package:flutter_wanandroid/routers/navigator_tool.dart';
 import 'package:flutter_wanandroid/tools/uikit_help.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:provide/provide.dart';
@@ -129,20 +130,9 @@ class _WebDetailPageState extends State<WebDetailPage> {
     User _currentUser = UserProvide.currentUser;
     if (_currentUser == null) {
       // TODO: 跳转有问题，push有问题，登录界面的内容不能展示出来
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (BuildContext context) {
-          return LoginRegisterPage(pageType: PageType.login,);
-        })
-      );
+      NavigatorTool.push(context, LoginRegisterPage(pageType: PageType.login));
       // TODO: 跳转有问题，换成present方式，还是一样
-      // Navigator.of(context).push(
-      //   CupertinoPageRoute(
-      //     fullscreenDialog: true,
-      //     builder: (context) {
-      //       return LoginRegisterPage(pageType: PageType.login);
-      //     }
-      //   )
-      // );
+      //NavigatorTool.present(context, LoginRegisterPage(pageType: PageType.login));
       return;
     }
 

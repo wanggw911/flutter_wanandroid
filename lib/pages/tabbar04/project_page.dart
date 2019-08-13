@@ -161,7 +161,7 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
     return Card(
       child: InkWell(
         onTap: (){
-          NavigatorTool.go(context, WebDetailPage(model: article));
+          NavigatorTool.push(context, WebDetailPage(model: article));
         },
         child: Container(
           //decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.red)), //use for debug frame

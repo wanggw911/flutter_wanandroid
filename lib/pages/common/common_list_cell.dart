@@ -26,7 +26,7 @@ class CommonListCell {
       padding: EdgeInsets.only(left: 10.0, top: 5.0, right: 10.0),
       child: InkWell(
         onTap: () {
-          NavigatorTool.go(context, WebDetailPage(model: model));
+          NavigatorTool.push(context, WebDetailPage(model: model));
         },
         child: Card(
           child: Column(

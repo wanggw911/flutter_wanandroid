@@ -146,7 +146,7 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
         NavigationSubNode subNode = rightList[index];
         return InkWell(
           onTap: (){
-            NavigatorTool.go(context, WebDetailPage(model: subNode));
+            NavigatorTool.push(context, WebDetailPage(model: subNode));
           },
           child: Container(
             padding: EdgeInsets.only(top:10, bottom: 10, left: 20, right: 20),

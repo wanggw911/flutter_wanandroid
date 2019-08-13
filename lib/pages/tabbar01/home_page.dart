@@ -131,7 +131,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
           HomeBanner banner = bannerList[index];
           return InkWell(
             onTap: (){
-              NavigatorTool.go(context, WebDetailPage(model: banner));
+              NavigatorTool.push(context, WebDetailPage(model: banner));
             },
             child: Image.network(
               banner.imagePath,

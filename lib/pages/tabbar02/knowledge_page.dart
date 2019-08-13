@@ -6,6 +6,7 @@ import 'package:flutter_wanandroid/pages/common/common_appbar.dart';
 import 'package:flutter_wanandroid/pages/common/drawer_menu.dart';
 import 'package:flutter_wanandroid/pages/tabbar02/knowledge_second_page.dart';
 import 'package:flutter_wanandroid/provide/knowledge_provide.dart';
+import 'package:flutter_wanandroid/routers/navigator_tool.dart';
 import 'package:flutter_wanandroid/tools/uikit_help.dart';
 import 'package:provide/provide.dart';
 
@@ -70,12 +71,7 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
       padding: EdgeInsets.only(top: 5.0, left: 10.0, bottom: 0, right: 10.0),
       child: InkWell(
         onTap: (){
-          //页面跳转: KnowledgeSecondPage 
-          Navigator.of(context).push(
-          MaterialPageRoute(builder: (BuildContext context) {
-              return KnowledgeSecondPage(node: node);
-            })
-          );
+          NavigatorTool.push(context, KnowledgeSecondPage(node: node));
         },
         child: Card(
           child: Row(

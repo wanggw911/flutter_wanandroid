@@ -39,14 +39,14 @@ class MenuBuilder {
         title: Text('收藏'),
         onTap: (){
           Widget page = user != null ? CollectionPage() : LoginRegisterPage(pageType: PageType.login,);
-          NavigatorTool.go(context, page);
+          NavigatorTool.push(context, page);
         },
       ),
       ListTile(
         leading: Icon(Icons.settings),
         title: Text('设置'),
         onTap: (){
-          NavigatorTool.go(context, SettingPage());
+          NavigatorTool.push(context, SettingPage());
         },
       ),
       ListTile(
