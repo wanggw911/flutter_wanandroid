@@ -11,6 +11,7 @@ import 'package:flutter_wanandroid/pages/common/web_detail_page.dart';
 import 'package:flutter_wanandroid/provide/home_provide.dart';
 import 'package:flutter_wanandroid/routers/navigator_tool.dart';
 import 'package:flutter_wanandroid/tools/uikit_help.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provide/provide.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,6 +23,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin {
 
   GlobalKey<EasyRefreshState> _easyRefreshKey =  GlobalKey<EasyRefreshState>();
+
+  bool _showLoading = false;
 
   @override
   bool get wantKeepAlive => true;
@@ -48,8 +51,15 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
         child: MenuBuilder.menuDrawer(context)
       ),
       body: Container(
-        child: _contentListView(),
+        child: _loadingContainer(),
       ),
+    );
+  }
+
+  Widget _loadingContainer() {
+    return ModalProgressHUD(
+      child: _contentListView(),
+      inAsyncCall: _showLoading,
     );
   }
 
@@ -81,6 +91,22 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
           },
           loadMore: () async {
             await _loadMoreData();
+          },
+          headerStatusChanged: (state) {
+            if (state == HeaderStatus.START) {
+              _needShowLoading(true);
+            }
+            if (state == HeaderStatus.END) {
+               _needShowLoading(false);
+            }
+          },
+          footerStatusChanged: (state) {
+            if (state == FooterStatus.START) {
+              _needShowLoading(true);
+            }
+            if (state == FooterStatus.END) {
+               _needShowLoading(false);
+            }
           },
         );
     });
@@ -127,5 +153,11 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
 
   Future _loadMoreData() async {
     await Provide.value<HomeProvide>(context).getArticleData(false);
+  }
+
+  void _needShowLoading(bool needShow) {
+    setState(() {
+      _showLoading = needShow;
+    });
   }
 }
