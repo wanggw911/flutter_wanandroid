@@ -1,11 +1,13 @@
 import 'dart:convert'; // 提供 string to json 的方法
+import 'package:flutter_wanandroid/provide/user_provide.dart';
+import 'package:flutter_wanandroid/tools/save_to_location.dart';
 import 'package:http/http.dart' as http; // 第三方网络请求
 
 class Engine {
 
   static Future<EngineCallBack> get(url, {Map<String, String> headers, Map<String, String> params}) async {
     var requestUrl = url;
-    requestUrl += paramsString(params);
+    requestUrl += _paramsString(params);
 
     var client = http.Client();
     http.Response response = await client.get(requestUrl, headers: headers);
@@ -35,17 +37,29 @@ class Engine {
     //【异常判断2】：errorCode，错误回调
     var jsonMap = json.decode(response.body);
     if ((jsonMap['errorCode'] as int) < 0) {
-      String errorInfo = jsonMap['errorMsg'] as String;
+      String errorInfo = jsonMap.toString();
       print("❌请求失败，错误信息：$errorInfo\n\turl=$url");
       return EngineCallBack(null, errorInfo);
     }
+
+    _saveCookieToLocation(response);
 
     print("✅请求成功，url=$url");
     dynamic data = jsonMap['data'];
     return EngineCallBack(data, null);
   }
 
-  static String paramsString(Map<String, String> params) {
+  static void _saveCookieToLocation(http.Response response) {
+    if (response.request.url.toString().contains("login") || response.request.url.toString().contains("login")) {
+      print("response.headers = ${response.headers.toString()}");
+      Map<String, String> headers = response.headers;
+      var cookie = headers["set-cookie"];
+      UserProvide.cookie = cookie;
+      //DataHander.saveStringWith("cookie", cookie);
+    }
+  }
+
+  static String _paramsString(Map<String, String> params) {
     String paramsString = "";
     if (params != null && params.isNotEmpty) {
       paramsString += "?";

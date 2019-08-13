@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_wanandroid/network/engine.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_wanandroid/model/home_article.dart';
@@ -216,23 +218,10 @@ class Network {
   //请求header
   static Map<String, String> _headers() {
     Map<String, String> header = Map<String, String>();
-    var user = UserProvide.currentUser;
-    if (user != null) {
-      var cookie = "loginUserName=${user.username}, loginUserPassword=${user.password}";
-      header["Cookie"] = cookie;
+    if (UserProvide.cookie.isNotEmpty) {
+      header["Cookie"] = UserProvide.cookie;
     }
     print('header = $header');
     return header;
-  }
-
-  //debug print
-  static debugLog(http.Response response) {
-    var url = response.request.url;
-    if (response.statusCode == 200) {
-      print("✅请求成功，url=$url");
-    }
-    else {
-      print("❌请求失败，url=$url");
-    }
   }
 }

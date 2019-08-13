@@ -7,6 +7,7 @@ import 'package:flutter_wanandroid/tools/save_to_location.dart';
 
 class UserProvide with ChangeNotifier {
   static User currentUser;
+  static String cookie;//后台返回的密码，需要放在Cookie中
   User user;
   int _pageIndex = 0;
   List<Article> collectionList = [];
