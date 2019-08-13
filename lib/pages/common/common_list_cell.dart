@@ -4,6 +4,7 @@ import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/pages/common/web_detail_page.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
+import 'package:flutter_wanandroid/routers/navigator_tool.dart';
 import 'package:flutter_wanandroid/tools/uikit_help.dart';
 import 'package:provide/provide.dart';
 
@@ -25,12 +26,7 @@ class CommonListCell {
       padding: EdgeInsets.only(left: 10.0, top: 5.0, right: 10.0),
       child: InkWell(
         onTap: () {
-          //页面跳转：WebDetailPage 
-          Navigator.of(context).push(
-          MaterialPageRoute(builder: (BuildContext context) {
-              return WebDetailPage(model: model);
-            })
-          );
+          NavigatorTool.go(context, WebDetailPage(model: model));
         },
         child: Card(
           child: Column(

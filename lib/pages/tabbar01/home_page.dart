@@ -9,6 +9,7 @@ import 'package:flutter_wanandroid/pages/common/common_list_cell.dart';
 import 'package:flutter_wanandroid/pages/common/drawer_menu.dart';
 import 'package:flutter_wanandroid/pages/common/web_detail_page.dart';
 import 'package:flutter_wanandroid/provide/home_provide.dart';
+import 'package:flutter_wanandroid/routers/navigator_tool.dart';
 import 'package:flutter_wanandroid/tools/uikit_help.dart';
 import 'package:provide/provide.dart';
 
@@ -104,12 +105,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
           HomeBanner banner = bannerList[index];
           return InkWell(
             onTap: (){
-              //页面跳转：WebDetailPage 
-              Navigator.of(context).push(
-              MaterialPageRoute(builder: (BuildContext context) {
-                  return WebDetailPage(model: banner);
-                })
-              );
+              NavigatorTool.go(context, WebDetailPage(model: banner));
             },
             child: Image.network(
               banner.imagePath,

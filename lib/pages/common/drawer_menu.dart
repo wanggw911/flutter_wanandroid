@@ -1,11 +1,11 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/pages/common/collection_page.dart';
 import 'package:flutter_wanandroid/pages/common/login_register_page.dart';
 import 'package:flutter_wanandroid/pages/common/setting_page.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
+import 'package:flutter_wanandroid/routers/navigator_tool.dart';
 import 'package:provide/provide.dart';
 
 class MenuBuilder {
@@ -38,30 +38,15 @@ class MenuBuilder {
         leading: Icon(Icons.favorite),
         title: Text('收藏'),
         onTap: (){
-          Navigator.of(context).push(
-          MaterialPageRoute(builder: (BuildContext context) {
-              if (user != null) {
-                //页面跳转：CollectionPage
-                return CollectionPage();
-              } 
-              else {
-                //页面跳转：LoginRegisterPage
-                return LoginRegisterPage(pageType: PageType.login,);
-              } 
-            })
-          );
+          Widget page = user != null ? CollectionPage() : LoginRegisterPage(pageType: PageType.login,);
+          NavigatorTool.go(context, page);
         },
       ),
       ListTile(
         leading: Icon(Icons.settings),
         title: Text('设置'),
         onTap: (){
-          //页面跳转：SettingPage
-          Navigator.of(context).push(
-          MaterialPageRoute(builder: (BuildContext context) {
-              return SettingPage();
-            })
-          );
+          NavigatorTool.go(context, SettingPage());
         },
       ),
       ListTile(

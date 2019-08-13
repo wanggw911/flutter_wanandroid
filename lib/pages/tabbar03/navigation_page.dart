@@ -4,6 +4,7 @@ import 'package:flutter_wanandroid/pages/common/common_appbar.dart';
 import 'package:flutter_wanandroid/pages/common/drawer_menu.dart';
 import 'package:flutter_wanandroid/pages/common/web_detail_page.dart';
 import 'package:flutter_wanandroid/provide/navigation_provide.dart';
+import 'package:flutter_wanandroid/routers/navigator_tool.dart';
 import 'package:flutter_wanandroid/tools/CustomTheme.dart';
 import 'package:flutter_wanandroid/tools/uikit_help.dart';
 import 'package:provide/provide.dart';
@@ -145,12 +146,7 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
         NavigationSubNode subNode = rightList[index];
         return InkWell(
           onTap: (){
-            //页面跳转：WebDetailPage 
-            Navigator.of(context).push(
-            MaterialPageRoute(builder: (BuildContext context) {
-                return WebDetailPage(model: subNode);
-              })
-            );
+            NavigatorTool.go(context, WebDetailPage(model: subNode));
           },
           child: Container(
             padding: EdgeInsets.only(top:10, bottom: 10, left: 20, right: 20),
