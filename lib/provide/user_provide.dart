@@ -10,12 +10,17 @@ class UserProvide with ChangeNotifier {
   User user;
   int _pageIndex = 0;
   List<Article> collectionList = [];
+  bool needLoading = false;
   
   Future login(String username, String password) async {
+    needLoading = true;
+    notifyListeners();
+
     user = await Network.loginAction(username, password);
     UserProvide.currentUser = user;
     UserProvide.currentUser.password = password;
     print('登录成功....');
+    needLoading = false;
     notifyListeners();
 
     _saveAccountToLocation(username, password);
@@ -31,9 +36,13 @@ class UserProvide with ChangeNotifier {
   }
 
   Future register(String username, String password) async {
+    needLoading = true;
+    notifyListeners();
+
     user = await Network.registerAction(username, password);
     UserProvide.currentUser = user;
     print('注册成功....');
+    needLoading = false;
     notifyListeners();
 
     _saveAccountToLocation(username, password);

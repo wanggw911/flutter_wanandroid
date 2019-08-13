@@ -23,12 +23,12 @@ class Engine {
   }  
 
   static EngineCallBack responseHander(http.Response response) {
-    debugLog(response);
+    var url = response.request.url;
     
     //【异常判断1】：请求状态码的判断
     if (response.statusCode != 200) {
       String errorInfo = "接口请求错误，错误码" + response.statusCode.toString();
-      print("❌请求失败，错误信息：$errorInfo");
+      print("❌请求失败，错误信息：$errorInfo\n\turl=$url");
       return EngineCallBack(null, errorInfo);
     }
 
@@ -36,10 +36,11 @@ class Engine {
     var jsonMap = json.decode(response.body);
     if ((jsonMap['errorCode'] as int) < 0) {
       String errorInfo = jsonMap['errorMsg'] as String;
-      print("❌请求失败，错误信息：$errorInfo");
+      print("❌请求失败，错误信息：$errorInfo\n\turl=$url");
       return EngineCallBack(null, errorInfo);
     }
 
+    print("✅请求成功，url=$url");
     dynamic data = jsonMap['data'];
     return EngineCallBack(data, null);
   }
@@ -54,16 +55,6 @@ class Engine {
       paramsString = paramsString.substring(0, paramsString.length-1);
     }
     return paramsString;
-  }
-
-  static debugLog(http.Response response) {
-    var url = response.request.url;
-    if (response.statusCode == 200) {
-      print("✅请求成功，url=$url");
-    }
-    else {
-      print("❌请求失败，url=$url");
-    }
   }
 }
 

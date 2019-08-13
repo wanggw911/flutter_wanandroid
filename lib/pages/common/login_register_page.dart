@@ -7,6 +7,7 @@ import 'package:flutter_wanandroid/routers/navigator_tool.dart';
 import 'package:flutter_wanandroid/tools/CustomTheme.dart';
 import 'package:flutter_wanandroid/tools/save_to_location.dart';
 import 'package:flutter_wanandroid/tools/uikit_help.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provide/provide.dart';
 
 enum PageType {
@@ -84,8 +85,19 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
           ),
           actions: rightActions,
         ),
-        body: _content(),
+        body: _loadingContainer(),
       );
+  }
+
+  Widget _loadingContainer() {
+    return Provide<UserProvide>(builder: (context, child, value) {
+      bool needLoading = Provide.value<UserProvide>(context).needLoading;
+      return ModalProgressHUD(
+        child: _content(),
+        opacity: 0,
+        inAsyncCall: needLoading,
+      );
+    });
   }
 
   Widget _content() {
@@ -94,7 +106,6 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
       if (user != null) {
         //不能立即跳转，需要延时一下，否则就会黑屏一闪而过
         Future.delayed(Duration(seconds: 1), () {
-          print('login success');
           Navigator.pop(context);
         });
       }
