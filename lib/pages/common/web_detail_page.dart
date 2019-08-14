@@ -126,7 +126,7 @@ class _WebDetailPageState extends State<WebDetailPage> {
   void _navigaitonButtonAction(String value) async {
     print('选择的菜单是$value');
     if (value == 'share') {
-
+      //弹出系统的分享，有问题，不能分享网页到微信，比较坑爹哈
     }
     else if (value == 'safari') {
       if (Platform.isIOS) {

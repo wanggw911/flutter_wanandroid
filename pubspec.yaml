@@ -27,7 +27,7 @@ dependencies:
   flutter_screenutil: ^0.5.3
   flutter_easyrefresh: ^1.2.7
   http: '>=0.11.3+12'
-  dio: ^2.0.9
+  #dio: ^2.0.9
   provide: ^1.0.2
   shared_preferences: ^0.5.1
   flutter_statusbarcolor: ^0.2.1

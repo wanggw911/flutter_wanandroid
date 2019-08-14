@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_wanandroid/tools/CustomTheme.dart';
 import 'package:flutter_wanandroid/tools/save_to_location.dart';
+import 'package:flutter_wanandroid/tools/theme_manage.dart';
 
 enum SettingType {
   autoCache,

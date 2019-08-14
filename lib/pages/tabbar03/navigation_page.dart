@@ -5,7 +5,7 @@ import 'package:flutter_wanandroid/pages/common/drawer_menu.dart';
 import 'package:flutter_wanandroid/pages/common/web_detail_page.dart';
 import 'package:flutter_wanandroid/provide/navigation_provide.dart';
 import 'package:flutter_wanandroid/routers/navigator_tool.dart';
-import 'package:flutter_wanandroid/tools/CustomTheme.dart';
+import 'package:flutter_wanandroid/tools/theme_manage.dart';
 import 'package:flutter_wanandroid/tools/uikit_help.dart';
 import 'package:provide/provide.dart';
 
