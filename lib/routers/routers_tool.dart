@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+// 工具编写参考：
+//  [Flutter - 路由管理 - 02 - Fluro](https://juejin.im/post/5d051a5b6fb9a07ec07fbdc5)
+//  [github地址](https://github.com/LZQL/flutter_learning_demo/tree/master/fluro_test)
 class RouterTools {
 
   /// object 转为 string json
