@@ -69,7 +69,7 @@ class _SettingPageState extends State<SettingPage> {
         //height: setHeight(300), //设置了高度，里面的内容高度就不准确了😂
         padding: EdgeInsets.only(left: 10, right: 10),
         decoration: BoxDecoration(
-          // TODO: 设置圆角的好像没有生效，应该使用 card clipBehavior
+          // 设置圆角的好像没有生效，应该使用 card clipBehavior
           //borderRadius: BorderRadius.all(Radius.circular(20.0))
         ),
         child: Card(

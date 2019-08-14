@@ -22,6 +22,10 @@ class Application {
 class Routers {
   static String root = '/';
   static String webDetailsPage = '/web_detail';
+  static String settingPage = '/setting';
+  static String loginRegisterPage = '/loginRegister';
+  static String collectionPage = '/collection';
+  static String knowledgeSecondPage = '/knowledgeSecond';
   
   static void configureRouters(Router router) {
     router.notFoundHandler = Handler(
@@ -32,6 +36,10 @@ class Routers {
     );
 
     router.define(webDetailsPage, handler: webDetailsHandler);
+    router.define(settingPage, handler: settingHandler);
+    router.define(loginRegisterPage, handler: loginRegisterHandler);
+    router.define(collectionPage, handler: collectionHandler);
+    router.define(knowledgeSecondPage, handler: knowledgeSecondHandler);
   }
 
 }

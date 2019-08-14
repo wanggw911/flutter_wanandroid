@@ -4,6 +4,7 @@ import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
 import 'package:flutter_wanandroid/routers/navigator_tool.dart';
+import 'package:flutter_wanandroid/routers/routers.dart';
 import 'package:flutter_wanandroid/tools/save_to_location.dart';
 import 'package:flutter_wanandroid/tools/theme_manage.dart';
 import 'package:flutter_wanandroid/tools/uikit_help.dart';
@@ -51,7 +52,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
           FlatButton(
             child: Text('注册'),
             onPressed: () {
-              NavigatorTool.push(context, LoginRegisterPage(pageType: PageType.register));
+              Application.push(context, Routers.loginRegisterPage+'?isLogin=0');
             },
           )
         ];

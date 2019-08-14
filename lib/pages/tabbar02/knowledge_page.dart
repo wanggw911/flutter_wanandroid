@@ -7,6 +7,8 @@ import 'package:flutter_wanandroid/pages/common/drawer_menu.dart';
 import 'package:flutter_wanandroid/pages/tabbar02/knowledge_second_page.dart';
 import 'package:flutter_wanandroid/provide/knowledge_provide.dart';
 import 'package:flutter_wanandroid/routers/navigator_tool.dart';
+import 'package:flutter_wanandroid/routers/routers.dart';
+import 'package:flutter_wanandroid/routers/routers_tool.dart';
 import 'package:flutter_wanandroid/tools/uikit_help.dart';
 import 'package:provide/provide.dart';
 
@@ -71,7 +73,8 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
       padding: EdgeInsets.only(top: 5.0, left: 10.0, bottom: 0, right: 10.0),
       child: InkWell(
         onTap: (){
-          NavigatorTool.push(context, KnowledgeSecondPage(node: node));
+          String json = RouterTools.object2string(node);
+          Application.push(context, Routers.knowledgeSecondPage+'?nodeJson=$json');
         },
         child: Card(
           child: Row(
