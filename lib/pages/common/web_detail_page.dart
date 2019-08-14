@@ -10,7 +10,8 @@ import 'package:flutter_wanandroid/pages/common/login_register_page.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
 import 'package:flutter_wanandroid/routers/navigator_tool.dart';
 import 'package:flutter_wanandroid/tools/uikit_help.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+// import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:provide/provide.dart';
 
 class WebDetailPage extends StatefulWidget {
@@ -27,8 +28,6 @@ class _WebDetailPageState extends State<WebDetailPage> {
   @override
   void initState() {
     super.initState();
-
-    //_currentUser = Provide.value<UserProvide>(context).user;
 
     title = "详情";
     if (widget.model is HomeBanner) {
@@ -58,25 +57,17 @@ class _WebDetailPageState extends State<WebDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Provide<UserProvide>(builder: (context, child, value) {
-      //User user = Provide.value<UserProvide>(context).user;
       return Scaffold(
-        appBar: _navigationBar(),
-        body: WebviewScaffold(
-          url: urlString,
-          withZoom: true, // 允许网页缩放
-          withLocalStorage: true, // 允许LocalStorage
-          withJavascript: true, // 允许执行js代码
+        appBar: AppBar(
+          title: Text('$title'),  
+          actions: _rightNaviButtons(),
+        ),
+        body: WebView(
+          initialUrl: urlString,
+          javascriptMode: JavascriptMode.unrestricted,
         ),
       );
     });
-  }
-
-  Widget _navigationBar() {
-    return AppBar(
-        title: Text('$title'),
-        actions: _rightNaviButtons(),
-      );
-    
   }
 
   List<Widget> _rightNaviButtons() {
@@ -99,12 +90,12 @@ class _WebDetailPageState extends State<WebDetailPage> {
             },
             itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
               PopupMenuItem<String>(
-                height: setHeight(40),
+                //height: setHeight(40),
                 value: '选项一的值',
                 child: new Text('分享')
               ),
               PopupMenuItem<String>(
-                height: setHeight(40),
+                //height: setHeight(40),
                 value: '选项二的值',
                 child: new Text('Safari打开')
               ),

@@ -29,12 +29,18 @@ dependencies:
   http: '>=0.11.3+12'
   dio: ^2.0.9
   provide: ^1.0.2
-  flutter_webview_plugin: ^0.3.5
   shared_preferences: ^0.5.1
   flutter_statusbarcolor: ^0.2.1
   fluro: ^1.5.1
   #bmprogresshud: ^0.0.5
   modal_progress_hud: ^0.1.3
+  # flutter_webview_plugin: ^0.3.5
+  #   使用 flutter_webview_plugin 会导致两个问题:
+  #   1、一个是从网页跳转会紊乱，跳转到登录界面不能展示登录界面的内容
+  #   2、导航栏上面的弹出菜单不能展示完全，比较坑爹
+  # webview_flutter 插件使用：
+  #  比较坑爹的地方，一定要设置 javascriptMode: JavascriptMode.unrestricted, 这个参数，否则会出现网页加载不出来的bug
+  webview_flutter: ^0.3.11+3
 
 dev_dependencies:
   flutter_test:
