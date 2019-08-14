@@ -5,6 +5,8 @@ import 'package:flutter_wanandroid/pages/common/drawer_menu.dart';
 import 'package:flutter_wanandroid/pages/common/web_detail_page.dart';
 import 'package:flutter_wanandroid/provide/navigation_provide.dart';
 import 'package:flutter_wanandroid/routers/navigator_tool.dart';
+import 'package:flutter_wanandroid/routers/routers.dart';
+import 'package:flutter_wanandroid/routers/routers_tool.dart';
 import 'package:flutter_wanandroid/tools/theme_manage.dart';
 import 'package:flutter_wanandroid/tools/uikit_help.dart';
 import 'package:provide/provide.dart';
@@ -146,7 +148,9 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
         NavigationSubNode subNode = rightList[index];
         return InkWell(
           onTap: (){
-            NavigatorTool.push(context, WebDetailPage(model: subNode));
+            String modelType = 'NavigationSubNode';
+            String json = RouterTools.object2string(subNode);
+            Application.push(context, Routers.webDetailsPage+'?json=$json&model_type=$modelType');
           },
           child: Container(
             padding: EdgeInsets.only(top:10, bottom: 10, left: 20, right: 20),

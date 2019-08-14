@@ -18,15 +18,15 @@ import 'package:provide/provide.dart';
 
 
 class WebDetailPage extends StatefulWidget {
-  final dynamic model;
   final String modelJson;
   final String modelType;
-  WebDetailPage({Key key, this.model, this.modelJson, this.modelType}) : super(key: key);
+  WebDetailPage({Key key, this.modelJson, this.modelType}) : super(key: key);
 
   _WebDetailPageState createState() => _WebDetailPageState();
 }
 
 class _WebDetailPageState extends State<WebDetailPage> {
+  dynamic model;
   String title;
   String urlString;
   Function _actionFunction;
@@ -34,14 +34,24 @@ class _WebDetailPageState extends State<WebDetailPage> {
   _analysisParams() {
     var map = RouterTools.string2map(widget.modelJson);
     if (widget.modelType == 'Article') {
-      Article article = Article.fromJson(map);
-      title = article.title;
-      urlString = article.link;
+      model = Article.fromJson(map);
+      title = model.title;
+      urlString = model.link;
     }
     else if (widget.modelType == 'ProjectArticle') {
-      ProjectArticle article = ProjectArticle.fromJson(map);
-      title = article.title;
-      urlString = article.link;
+      model = ProjectArticle.fromJson(map);
+      title = model.title;
+      urlString = model.link;
+    }
+    else if (widget.modelType == 'HomeBanner') {
+      model = HomeBanner.fromJson(map);
+      title = model.title;
+      urlString = model.url;
+    }
+    else if (widget.modelType == 'NavigationSubNode') {
+      model = NavigationSubNode.fromJson(map);
+      title = model.title;
+      urlString = model.url;
     }
     print("WebDetailPage，Web详情：[$title]($urlString)");
   }
@@ -100,8 +110,8 @@ class _WebDetailPageState extends State<WebDetailPage> {
 
   List<Widget> _rightNaviButtons() {
     List<Widget> list = [];
-    if (widget.model is Article) {
-      IconData iconData = _collectionIconData(widget.model as Article);
+    if (model is Article) {
+      IconData iconData = _collectionIconData(model as Article);
       list.add(IconButton(
         icon: Icon(iconData, color: Colors.white,),
         tooltip: 'Air it',
@@ -167,7 +177,7 @@ class _WebDetailPageState extends State<WebDetailPage> {
       return;
     }
 
-    int articleId = (widget.model as Article).id;
+    int articleId = (model as Article).id;
     print("_collectionOrNotAction === ${_currentUser.collectIds} == $articleId");
     bool isCollection = _currentUser.collectIds.contains(articleId);
     if (isCollection && _actionFunction != null) {
