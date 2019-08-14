@@ -9,10 +9,9 @@ import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/pages/common/login_register_page.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
 import 'package:flutter_wanandroid/routers/navigator_tool.dart';
-import 'package:flutter_wanandroid/tools/uikit_help.dart';
-// import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:provide/provide.dart';
+
 
 class WebDetailPage extends StatefulWidget {
   final dynamic model;
@@ -24,6 +23,7 @@ class WebDetailPage extends StatefulWidget {
 class _WebDetailPageState extends State<WebDetailPage> {
   String title;
   String urlString;
+  Function _actionFunction;
 
   @override
   void initState() {
@@ -51,12 +51,17 @@ class _WebDetailPageState extends State<WebDetailPage> {
       urlString = project.link;
     }
     
-    print("WebDetailPage：Web详情: 文章名字: $title、文章地址: $urlString");
+    print("WebDetailPage，Web详情：[$title]($urlString)");
   }
 
   @override
   Widget build(BuildContext context) {
     return Provide<UserProvide>(builder: (context, child, value) {
+      User user = Provide.value<UserProvide>(context).user;
+      if (user != null && _actionFunction != null) {
+        _actionFunction();
+        _actionFunction = null;
+      }
       return Scaffold(
         appBar: AppBar(
           title: Text('$title'),  
@@ -92,12 +97,12 @@ class _WebDetailPageState extends State<WebDetailPage> {
               PopupMenuItem<String>(
                 //height: setHeight(40),
                 value: '选项一的值',
-                child: new Text('分享')
+                child: Text('分享')
               ),
               PopupMenuItem<String>(
                 //height: setHeight(40),
                 value: '选项二的值',
-                child: new Text('Safari打开')
+                child: Text('Safari打开')
               ),
             ]
           ),
@@ -120,15 +125,19 @@ class _WebDetailPageState extends State<WebDetailPage> {
   void _collectionOrNotAction() {
     User _currentUser = UserProvide.currentUser;
     if (_currentUser == null) {
-      // TODO: 跳转有问题，无论是push，还是present，跳转后的登录界面不能展示内容
-      NavigatorTool.push(context, LoginRegisterPage(pageType: PageType.login));
-      //NavigatorTool.present(context, LoginRegisterPage(pageType: PageType.login));
+      _actionFunction = _collectionOrNotAction;
+      NavigatorTool.present(context, LoginRegisterPage(pageType: PageType.login));
       return;
     }
 
     int articleId = (widget.model as Article).id;
     print("_collectionOrNotAction === ${_currentUser.collectIds} == $articleId");
     bool isCollection = _currentUser.collectIds.contains(articleId);
+    if (isCollection && _actionFunction != null) {
+      print("文章已经收藏了。。。。");
+      return;
+    }
+
     if (isCollection) {
       Provide.value<UserProvide>(context).cancelCollectionArticle(articleId);
     }

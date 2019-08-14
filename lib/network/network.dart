@@ -217,8 +217,11 @@ class Network {
     Map<String, String> header = Map<String, String>();
     if (UserProvide.cookie.isNotEmpty) {
       header["Cookie"] = UserProvide.cookie;
+      print('Cookie 不为空');
     }
-    print('header = $header');
+    else {
+      print('Cookie 为空');
+    }
     return header;
   }
 }

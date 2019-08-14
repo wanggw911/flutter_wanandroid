@@ -28,6 +28,8 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
   final _userNameTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
 
+  bool isPoped = false;
+
   @override
   void dispose() {
     FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
@@ -103,7 +105,8 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
   Widget _content() {
     return Provide<UserProvide>(builder: (context, child, value) {
       User user = Provide.value<UserProvide>(context).user;
-      if (user != null) {
+      if (user != null && !isPoped) {
+        isPoped = true;
         //不能立即跳转，需要延时一下，否则就会黑屏一闪而过
         Future.delayed(Duration(seconds: 1), () {
           Navigator.pop(context);

@@ -50,7 +50,7 @@ class Engine {
 
   static void _saveCookieToLocation(http.Response response) {
     if (response.request.url.toString().contains("login") || response.request.url.toString().contains("login")) {
-      print("response.headers = ${response.headers.toString()}");
+      // print("response.headers = ${response.headers.toString()}");
       Map<String, String> headers = response.headers;
       var cookie = headers["set-cookie"];
       UserProvide.cookie = cookie;
