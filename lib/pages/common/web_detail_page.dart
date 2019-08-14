@@ -11,6 +11,7 @@ import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/pages/common/login_register_page.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
 import 'package:flutter_wanandroid/routers/navigator_tool.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:provide/provide.dart';
@@ -28,6 +29,7 @@ class _WebDetailPageState extends State<WebDetailPage> {
   String title;
   String urlString;
   Function _actionFunction;
+  bool _needLoading = true;
 
   @override
   void initState() {
@@ -49,12 +51,27 @@ class _WebDetailPageState extends State<WebDetailPage> {
           title: Text('$title'),  
           actions: _rightNaviButtons(),
         ),
-        body: WebView(
-          initialUrl: urlString,
-          javascriptMode: JavascriptMode.unrestricted,
-        ),
+        body: _webviewContent(),
       );
     });
+  }
+
+  Widget _webviewContent() {
+    return Container(
+      child: ModalProgressHUD(
+        child: WebView(
+          initialUrl: urlString,
+          javascriptMode: JavascriptMode.unrestricted,
+          onPageFinished: (url) {
+            setState(() {
+              _needLoading = false;
+            });
+          },
+        ),
+        opacity: 0,
+        inAsyncCall: _needLoading,
+      ),
+    );
   }
 
   List<Widget> _rightNaviButtons() {
