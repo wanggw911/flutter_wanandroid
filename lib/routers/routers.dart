@@ -21,7 +21,7 @@ class Application {
 
 class Routers {
   static String root = '/';
-  static String web_detailsPage = '/web_detail';
+  static String webDetailsPage = '/web_detail';
   
   static void configureRouters(Router router) {
     router.notFoundHandler = Handler(
@@ -31,7 +31,7 @@ class Routers {
       }
     );
 
-    router.define(web_detailsPage, handler: webDetailsHandler);
+    router.define(webDetailsPage, handler: webDetailsHandler);
   }
 
 }

@@ -165,7 +165,7 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
         onTap: (){
           String modelType = "ProjectArticle";
           String json = RouterTools.object2string(article);
-          Application.push(context, Routers.web_detailsPage+'?json=$json&model_type=$modelType');
+          Application.push(context, Routers.webDetailsPage+'?json=$json&model_type=$modelType');
         },
         child: Container(
           //decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.red)), //use for debug frame

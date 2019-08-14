@@ -34,7 +34,7 @@ class CommonListCell {
             modelType = "ProjectArticle";
           }
           String json = RouterTools.object2string(model);
-          Application.push(context, Routers.web_detailsPage+'?json=$json&model_type=$modelType');
+          Application.push(context, Routers.webDetailsPage+'?json=$json&model_type=$modelType');
         },
         child: Card(
           child: Column(
