@@ -41,6 +41,7 @@ dependencies:
   # webview_flutter 插件使用：
   #  比较坑爹的地方，一定要设置 javascriptMode: JavascriptMode.unrestricted, 这个参数，否则会出现网页加载不出来的bug
   webview_flutter: ^0.3.11+3
+  url_launcher: ^5.1.2
 
 dev_dependencies:
   flutter_test:

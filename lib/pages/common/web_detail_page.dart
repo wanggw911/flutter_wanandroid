@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/model/home_article.dart';
@@ -9,6 +11,7 @@ import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/pages/common/login_register_page.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
 import 'package:flutter_wanandroid/routers/navigator_tool.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:provide/provide.dart';
 
@@ -91,18 +94,16 @@ class _WebDetailPageState extends State<WebDetailPage> {
       PopupMenuButton<String>(
             icon: Icon(Icons.more_vert),
             onSelected: (String value) {
-              print('选择的菜单是$value');
+              _navigaitonButtonAction(value);
             },
             itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
               PopupMenuItem<String>(
-                //height: setHeight(40),
-                value: '选项一的值',
+                value: 'share',
                 child: Text('分享')
               ),
               PopupMenuItem<String>(
-                //height: setHeight(40),
-                value: '选项二的值',
-                child: Text('Safari打开')
+                value: 'safari',
+                child: Text(Platform.isIOS?'Safari打开':'浏览器打开')
               ),
             ]
           ),
@@ -121,6 +122,22 @@ class _WebDetailPageState extends State<WebDetailPage> {
       return iconData;
     }
   } 
+
+  void _navigaitonButtonAction(String value) async {
+    print('选择的菜单是$value');
+    if (value == 'share') {
+
+    }
+    else if (value == 'safari') {
+      if (Platform.isIOS) {
+        //forceSafariVC: false: 跳转safari打开网页
+        //forceSafariVC: true: 内建浏览器打开网页
+        await launch(urlString, forceSafariVC: false);
+      } else {
+        await launch(urlString);
+      }
+    }
+  }
 
   void _collectionOrNotAction() {
     User _currentUser = UserProvide.currentUser;
