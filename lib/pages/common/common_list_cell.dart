@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/model/home_article.dart';
+import 'package:flutter_wanandroid/model/project_article.dart';
 import 'package:flutter_wanandroid/model/user.dart';
-import 'package:flutter_wanandroid/pages/common/web_detail_page.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
-import 'package:flutter_wanandroid/routers/navigator_tool.dart';
+import 'package:flutter_wanandroid/routers/routers.dart';
+import 'package:flutter_wanandroid/routers/routers_tool.dart';
 import 'package:flutter_wanandroid/tools/uikit_help.dart';
 import 'package:provide/provide.dart';
 
@@ -26,7 +26,15 @@ class CommonListCell {
       padding: EdgeInsets.only(left: 10.0, top: 5.0, right: 10.0),
       child: InkWell(
         onTap: () {
-          NavigatorTool.push(context, WebDetailPage(model: model));
+          String modelType = "";
+          if (model is Article) {
+            modelType = "Article";
+          }
+          else if (model is ProjectArticle) {
+            modelType = "ProjectArticle";
+          }
+          String json = RouterTools.object2string(model);
+          Application.push(context, Routers.web_detailsPage+'?json=$json&model_type=$modelType');
         },
         child: Card(
           child: Column(

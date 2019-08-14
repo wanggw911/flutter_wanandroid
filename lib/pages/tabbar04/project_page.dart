@@ -7,6 +7,8 @@ import 'package:flutter_wanandroid/pages/common/drawer_menu.dart';
 import 'package:flutter_wanandroid/pages/common/web_detail_page.dart';
 import 'package:flutter_wanandroid/provide/projects_provide.dart';
 import 'package:flutter_wanandroid/routers/navigator_tool.dart';
+import 'package:flutter_wanandroid/routers/routers.dart';
+import 'package:flutter_wanandroid/routers/routers_tool.dart';
 import 'package:flutter_wanandroid/tools/uikit_help.dart';
 import 'package:provide/provide.dart';
 
@@ -142,7 +144,7 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
             child: ListView.builder(
               itemCount: articleList.length,
               itemBuilder: (context, index) {
-                return _articleCell(articleList[index]);
+                return _projectArticleCell(articleList[index]);
               },
             ),
             onRefresh: () async {
@@ -156,12 +158,14 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
     );
     });
   }
-
-  Widget _articleCell(ProjectArticle article) {
+  
+  Widget _projectArticleCell(ProjectArticle article) {
     return Card(
       child: InkWell(
         onTap: (){
-          NavigatorTool.push(context, WebDetailPage(model: article));
+          String modelType = "ProjectArticle";
+          String json = RouterTools.object2string(article);
+          Application.push(context, Routers.web_detailsPage+'?json=$json&model_type=$modelType');
         },
         child: Container(
           //decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.red)), //use for debug frame

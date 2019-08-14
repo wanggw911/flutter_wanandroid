@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/pages/index_page.dart';
 import 'package:flutter_wanandroid/provide/home_provide.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_wanandroid/provide/navigation_provide.dart';
 import 'package:flutter_wanandroid/provide/projects_provide.dart';
 import 'package:flutter_wanandroid/provide/setting_provide.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
+import 'package:flutter_wanandroid/routers/routers.dart';
 import 'package:flutter_wanandroid/tools/save_to_location.dart';
 import 'package:provide/provide.dart';
 
@@ -37,6 +39,11 @@ Providers appProviders() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    final router = Router();
+    Routers.configureRouters(router);
+    Application.router = router;
+
     return Provide<SettingProvide>(builder: (context, child, value) {
       ThemeData themeData = Provide.value<SettingProvide>(context).themeData;
       return MaterialApp(
