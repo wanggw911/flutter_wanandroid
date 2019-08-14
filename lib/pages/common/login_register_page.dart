@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
-import 'package:flutter_wanandroid/routers/navigator_tool.dart';
 import 'package:flutter_wanandroid/routers/routers.dart';
 import 'package:flutter_wanandroid/tools/save_to_location.dart';
 import 'package:flutter_wanandroid/tools/theme_manage.dart';

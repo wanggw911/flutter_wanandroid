@@ -5,13 +5,12 @@ import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/knowledge_tree.dart';
 import 'package:flutter_wanandroid/pages/common/common_list_cell.dart';
 import 'package:flutter_wanandroid/provide/knowledge_provide.dart';
-import 'package:flutter_wanandroid/routers/routers_tool.dart';
 import 'package:provide/provide.dart';
 
 class KnowledgeSecondPage extends StatefulWidget {
-  final String modelJson;
+  final KnowledgeTreeNode node;
   
-  KnowledgeSecondPage({Key key, this.modelJson}) : super(key: key);
+  KnowledgeSecondPage({Key key, this.node}) : super(key: key);
 
   _KnowledgeSecondPageState createState() => _KnowledgeSecondPageState();
 }
@@ -26,8 +25,7 @@ class _KnowledgeSecondPageState extends State<KnowledgeSecondPage> with SingleTi
   void initState() {
     super.initState();
 
-    var map = RouterTools.string2map(widget.modelJson);
-    KnowledgeTreeNode node = KnowledgeTreeNode.fromJson(map);
+    KnowledgeTreeNode node = widget.node;
     _title = node.name;
     _controller = TabController(length: node.children.length, vsync: this);
 

@@ -11,16 +11,14 @@ import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/pages/common/login_register_page.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';
 import 'package:flutter_wanandroid/routers/navigator_tool.dart';
-import 'package:flutter_wanandroid/routers/routers_tool.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:provide/provide.dart';
 
 
 class WebDetailPage extends StatefulWidget {
-  final String modelJson;
-  final String modelType;
-  WebDetailPage({Key key, this.modelJson, this.modelType}) : super(key: key);
+  final dynamic model;
+  WebDetailPage({Key key, this.model}) : super(key: key);
 
   _WebDetailPageState createState() => _WebDetailPageState();
 }
@@ -31,60 +29,11 @@ class _WebDetailPageState extends State<WebDetailPage> {
   String urlString;
   Function _actionFunction;
 
-  _analysisParams() {
-    var map = RouterTools.string2map(widget.modelJson);
-    if (widget.modelType == 'Article') {
-      model = Article.fromJson(map);
-      title = model.title;
-      urlString = model.link;
-    }
-    else if (widget.modelType == 'ProjectArticle') {
-      model = ProjectArticle.fromJson(map);
-      title = model.title;
-      urlString = model.link;
-    }
-    else if (widget.modelType == 'HomeBanner') {
-      model = HomeBanner.fromJson(map);
-      title = model.title;
-      urlString = model.url;
-    }
-    else if (widget.modelType == 'NavigationSubNode') {
-      model = NavigationSubNode.fromJson(map);
-      title = model.title;
-      urlString = model.url;
-    }
-    print("WebDetailPage，Web详情：[$title]($urlString)");
-  }
-
   @override
   void initState() {
     super.initState();
 
     _analysisParams();
-
-    //title = "详情";
-    // if (widget.model is HomeBanner) {
-    //   var banner = widget.model as HomeBanner;
-    //   title = banner.title;
-    //   urlString = banner.url;
-    // }
-    // else if (widget.model is Article) {
-    //   var article = widget.model as Article;
-    //   title = article.title;
-    //   urlString = article.link;
-    // }
-    // else if (widget.model is NavigationSubNode) {
-    //   var subNode = widget.model as NavigationSubNode;
-    //   title = subNode.title;
-    //   urlString = subNode.link;
-    // }
-    // else if (widget.model is ProjectArticle) {
-    //   var project = widget.model as ProjectArticle;
-    //   title = project.title;
-    //   urlString = project.link;
-    // }
-    
-    
   }
 
   @override
@@ -190,6 +139,30 @@ class _WebDetailPageState extends State<WebDetailPage> {
     }
     else {
       Provide.value<UserProvide>(context).collectionArticle(articleId);
+    }
+  }
+
+  void _analysisParams() {
+    title = "详情";
+    if (widget.model is HomeBanner) {
+      var banner = widget.model as HomeBanner;
+      title = banner.title;
+      urlString = banner.url;
+    }
+    else if (widget.model is Article) {
+      var article = widget.model as Article;
+      title = article.title;
+      urlString = article.link;
+    }
+    else if (widget.model is NavigationSubNode) {
+      var subNode = widget.model as NavigationSubNode;
+      title = subNode.title;
+      urlString = subNode.link;
+    }
+    else if (widget.model is ProjectArticle) {
+      var project = widget.model as ProjectArticle;
+      title = project.title;
+      urlString = project.link;
     }
   }
 }
