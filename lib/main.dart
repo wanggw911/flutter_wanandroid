@@ -1,5 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_wanandroid/database/database.dart';
 import 'package:flutter_wanandroid/pages/index_page.dart';
 import 'package:flutter_wanandroid/provide/home_provide.dart';
 import 'package:flutter_wanandroid/provide/knowledge_provide.dart';
@@ -13,6 +14,7 @@ import 'package:provide/provide.dart';
 
 void main() async {
    DataHander.setup();
+   DatabaseHander.shared.testDatabase();
 
   SettingProvide settingProvide = SettingProvide();
   await settingProvide.readLocationSetting();
