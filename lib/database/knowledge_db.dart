@@ -1,7 +1,7 @@
 import 'package:flutter_wanandroid/database/database_hander.dart';
 import 'package:flutter_wanandroid/model/knowledge_tree.dart';
 
-//TODO: node数据还涉及到父节点和子节点的关系问题
+//node数据还涉及到父节点和子节点的关系问题
 class KnowledgeTreeNodeDB {
   static final String tableKnowledgeTreeNode = 'KnowledgeTreeNode';
   static final String id = 'id';

@@ -1,8 +1,9 @@
-import 'package:flutter_wanandroid/database/knowledge_db.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart'; //join method need import
 import 'package:flutter_wanandroid/database/home_article_db.dart';
 import 'package:flutter_wanandroid/database/home_banner_db.dart';
+import 'package:flutter_wanandroid/database/knowledge_db.dart';
+import 'package:flutter_wanandroid/database/navigation_db.dart';
 /* 
 sqflite [使用文档列表](https://github.com/tekartik/sqflite/tree/master/sqflite/doc)
 */
@@ -32,6 +33,8 @@ class DatabaseHander {
         await db.execute(HomeBannerDB.createTableSql());
         await db.execute(HomeArticleDB.createTableSql());
         await db.execute(KnowledgeTreeNodeDB.createTableSql());
+        await db.execute(NavigationNodeDB.createSuperNodeTableSql());
+        await db.execute(NavigationNodeDB.createSubNodeTableSql());
     });
     return database;
   }

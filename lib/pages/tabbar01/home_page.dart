@@ -51,18 +51,11 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
         child: MenuBuilder.menuDrawer(context)
       ),
       body: Container(
-        child: _loadingContainer(),
+        child: _contentListView(),
       ),
     );
   }
-
-  Widget _loadingContainer() {
-    return ModalProgressHUD(
-      child: _contentListView(),
-      inAsyncCall: _showLoading,
-    );
-  }
-
+  
   Widget _contentListView() {
     return Provide<HomeProvide>(builder: (context, child, value) {
       List<HomeBanner> _bannerList = Provide.value<HomeProvide>(context).bannerList;

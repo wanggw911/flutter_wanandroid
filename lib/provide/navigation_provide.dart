@@ -1,5 +1,6 @@
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter_wanandroid/database/navigation_db.dart';
 import 'package:flutter_wanandroid/model/navigation_tree.dart';
 import 'package:flutter_wanandroid/network/network.dart';
 
@@ -9,9 +10,14 @@ class NavigationProvide with ChangeNotifier {
   
   Future getNavigationNodeData() async {
     leftList.clear();
-    var list = await Network.getNavigationAllNodes();
-    if (list.length > 0) {
-        leftList.addAll(list);
+    leftList = await NavigationNodeDB.selectAll();
+    if (leftList.isEmpty) {
+      var list = await Network.getNavigationAllNodes();
+      if (list.length > 0) {
+          leftList.addAll(list);
+      }
+
+      NavigationNodeDB.insertWith(list);
     }
 
     notifyListeners();
