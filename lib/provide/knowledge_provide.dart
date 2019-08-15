@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_wanandroid/database/knowledge_db.dart';
 import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/knowledge_tree.dart';
 import 'package:flutter_wanandroid/network/network.dart';
@@ -10,10 +11,16 @@ class KnowledgeProvide with ChangeNotifier {
   
   Future getNodeData() async {
     nodeList.clear();
-    var list = await Network.getKnowledgeAllNodes();
-    nodeList.addAll(list);
+    nodeList = await KnowledgeTreeNodeDB.selectAll();
+    if (nodeList.isEmpty) {
+      var list = await Network.getKnowledgeAllNodes();
+      nodeList.addAll(list);
 
-    list.forEach((item){
+      //save to database
+      KnowledgeTreeNodeDB.insertWith(list, false);
+    }
+    
+    nodeList.forEach((item){
       item.children.forEach((subItem){
         nodeArticleMap[subItem.id] = KnowledgeArticles();
       });

@@ -154,7 +154,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
   }
 
   Future _loadMoreData() async {
-    await Provide.value<HomeProvide>(context).getArticleData(false);
+    await Provide.value<HomeProvide>(context).requestArticleData(false);
   }
 
   void _needShowLoading(bool needShow) {

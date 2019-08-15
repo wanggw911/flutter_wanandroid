@@ -132,7 +132,13 @@ class Article {
     courseId = json['courseId'];
     desc = json['desc'];
     envelopePic = json['envelopePic'];
-    fresh = json['fresh'];
+    if (json['fresh'] is int) {
+      fresh = json['fresh'] == 1 ?true:false;
+    }
+    if (json['fresh'] is bool) {
+      fresh = json['fresh'];
+    }
+    
     id = json['id'];
     link = json['link'];
     niceDate = json['niceDate'];
