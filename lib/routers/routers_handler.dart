@@ -23,9 +23,6 @@ Handler webDetailsHandler = Handler(
     if (modelType == 'Article') {
       model = Article.fromJson(map);
     }
-    else if (modelType == 'ProjectArticle') {
-      model = ProjectArticle.fromJson(map);
-    }
     else if (modelType == 'HomeBanner') {
       model = HomeBanner.fromJson(map);
     }

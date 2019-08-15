@@ -176,8 +176,8 @@ class _WebDetailPageState extends State<WebDetailPage> {
       title = subNode.title;
       urlString = subNode.link;
     }
-    else if (widget.model is ProjectArticle) {
-      var project = widget.model as ProjectArticle;
+    else if (widget.model is Article) {
+      var project = widget.model as Article;
       title = project.title;
       urlString = project.link;
     }

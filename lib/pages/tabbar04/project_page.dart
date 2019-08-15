@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:flutter_wanandroid/model/project_article.dart';
+import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/project_tree.dart';
 import 'package:flutter_wanandroid/pages/common/common_appbar.dart';
 import 'package:flutter_wanandroid/pages/common/drawer_menu.dart';
@@ -129,7 +129,7 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
         return Expanded(child: Container(child: Center(child: Text('加载中...'),),),);
       }
 
-      List<ProjectArticle> articleList = Provide.value<ProjectProvide>(context).articleList;
+      List<Article> articleList = Provide.value<ProjectProvide>(context).articleList;
       return Expanded(
       child: Container(
         //decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.red)), //use for debug frame
@@ -157,11 +157,11 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
     });
   }
   
-  Widget _projectArticleCell(ProjectArticle article) {
+  Widget _projectArticleCell(Article article) {
     return Card(
       child: InkWell(
         onTap: (){
-          String modelType = "ProjectArticle";
+          String modelType = "Article";
           String json = RouterTools.object2string(article);
           Application.push(context, Routers.webDetailsPage+'?json=$json&model_type=$modelType');
         },

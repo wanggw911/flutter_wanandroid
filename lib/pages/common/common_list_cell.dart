@@ -26,13 +26,7 @@ class CommonListCell {
       padding: EdgeInsets.only(left: 10.0, top: 5.0, right: 10.0),
       child: InkWell(
         onTap: () {
-          String modelType = "";
-          if (model is Article) {
-            modelType = "Article";
-          }
-          else if (model is ProjectArticle) {
-            modelType = "ProjectArticle";
-          }
+          String modelType = "Article";
           String json = RouterTools.object2string(model);
           Application.push(context, Routers.webDetailsPage+'?json=$json&model_type=$modelType');
         },

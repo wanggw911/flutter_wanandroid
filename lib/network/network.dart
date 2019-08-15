@@ -112,7 +112,7 @@ class Network {
   }
 
   //接口6：获取项目分类的文章列表，页码：拼接在链接中，从1开始。cid 分类的id，上面项目分类接口
-  static Future<List<ProjectArticle>> getProjectArticleList(int index, int nodeid) async {
+  static Future<List<Article>> getProjectArticleList(int index, int nodeid) async {
     var requestUrl = "https://www.wanandroid.com/project/list/$index/json?cid=$nodeid";
     EngineCallBack callBack = await Engine.get(requestUrl);
     var data = callBack.data;

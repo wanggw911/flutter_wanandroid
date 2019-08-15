@@ -1,6 +1,6 @@
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter_wanandroid/model/project_article.dart';
+import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/project_tree.dart';
 import 'package:flutter_wanandroid/network/network.dart';
 
@@ -8,7 +8,7 @@ class ProjectProvide with ChangeNotifier {
   int projectNodeIndex = 0;
   List<ProjectNode> projectNodeList = [];
   int articlePageIndex = 1;
-  List<ProjectArticle> articleList = [];
+  List<Article> articleList = [];
 
   Future getProjectNodeData() async {
     projectNodeList.clear();
