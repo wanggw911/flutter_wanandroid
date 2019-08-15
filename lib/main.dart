@@ -11,20 +11,20 @@ import 'package:flutter_wanandroid/routers/routers.dart';
 import 'package:flutter_wanandroid/tools/save_to_location.dart';
 import 'package:provide/provide.dart';
 
-void main() {
+void main() async {
    DataHander.setup();
 
+  SettingProvide settingProvide = SettingProvide();
+  await settingProvide.readLocationSetting();
+
   return runApp(ProviderNode(
-    providers: appProviders(),
+    providers: setupAppProviders(settingProvide),
     child: MyApp(),
   ));
 }
 
-Providers appProviders() {
+Providers setupAppProviders(SettingProvide settingProvide) {
   //【项目初始化】之：Provide
-  SettingProvide settingProvide = SettingProvide();
-  settingProvide.readLocationSetting();
-
   final providers = Providers()
       ..provide(Provider<HomeProvide>.value(HomeProvide()))
       ..provide(Provider<KnowledgeProvide>.value(KnowledgeProvide()))
