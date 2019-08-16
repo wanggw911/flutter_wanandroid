@@ -100,7 +100,7 @@ class Article {
   Article(
       {this.apkLink,
       this.author,
-      this.chapterId,
+      this.chapterId, //知识体系模块里面的subnode，对应的 id 文章，，项目node id，对应的就是这个id，
       this.chapterName,
       this.collect,
       this.courseId,
@@ -131,7 +131,7 @@ class Article {
     collect = json['collect'];
     courseId = json['courseId'];
     desc = json['desc'];
-    envelopePic = json['envelopePic'];
+    envelopePic = json['envelopePic'] ?? "";
     if (json['fresh'] is int) {
       fresh = json['fresh'] == 1 ?true:false;
     }

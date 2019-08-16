@@ -4,7 +4,6 @@ import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/home_banner.dart';
 import 'package:flutter_wanandroid/model/knowledge_tree.dart';
 import 'package:flutter_wanandroid/model/navigation_tree.dart';
-import 'package:flutter_wanandroid/model/project_article.dart';
 import 'package:flutter_wanandroid/pages/common/collection_page.dart';
 import 'package:flutter_wanandroid/pages/common/login_register_page.dart';
 import 'package:flutter_wanandroid/pages/common/setting_page.dart';

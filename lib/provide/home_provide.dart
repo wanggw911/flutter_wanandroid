@@ -36,7 +36,7 @@ class HomeProvide with ChangeNotifier {
   }
 
   Future<List<Article>> getLocationArticleData() async {
-    return await HomeArticleDB.selectAll();
+    return await HomeArticleDB.selectWith(ArticleType.Home);
   }
 
   //请求获取广告数据
@@ -65,6 +65,6 @@ class HomeProvide with ChangeNotifier {
 
     notifyListeners();
 
-    HomeArticleDB.insertWith(list);
+    HomeArticleDB.insertWith(list, ArticleType.Home);
   }
 }

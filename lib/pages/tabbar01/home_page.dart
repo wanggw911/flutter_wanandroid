@@ -11,7 +11,6 @@ import 'package:flutter_wanandroid/provide/home_provide.dart';
 import 'package:flutter_wanandroid/routers/routers.dart';
 import 'package:flutter_wanandroid/routers/routers_tool.dart';
 import 'package:flutter_wanandroid/tools/uikit_help.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provide/provide.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,7 +23,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
 
   GlobalKey<EasyRefreshState> _easyRefreshKey =  GlobalKey<EasyRefreshState>();
 
-  bool _showLoading = false;
+  //bool _showLoading = false;
 
   @override
   bool get wantKeepAlive => true;
@@ -152,7 +151,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
 
   void _needShowLoading(bool needShow) {
     setState(() {
-      _showLoading = needShow;
+      //_showLoading = needShow;
     });
   }
 }

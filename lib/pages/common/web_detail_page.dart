@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/home_banner.dart';
 import 'package:flutter_wanandroid/model/navigation_tree.dart';
-import 'package:flutter_wanandroid/model/project_article.dart';
 import 'package:flutter_wanandroid/model/user.dart';
 import 'package:flutter_wanandroid/pages/common/login_register_page.dart';
 import 'package:flutter_wanandroid/provide/user_provide.dart';

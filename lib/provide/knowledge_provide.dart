@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_wanandroid/database/home_article_db.dart';
 import 'package:flutter_wanandroid/database/knowledge_db.dart';
 import 'package:flutter_wanandroid/model/home_article.dart';
 import 'package:flutter_wanandroid/model/knowledge_tree.dart';
@@ -30,19 +31,29 @@ class KnowledgeProvide with ChangeNotifier {
   }
 
   Future getNodeArticleData(int cid, bool isRefresh) async {
+    //TODO: 应该初始化的时候获取本地数据，这里这样获取不大好，跟网络数据那边耦合了，晚点修改
     KnowledgeArticles articles = nodeArticleMap[cid];
-    if (isRefresh) {
-      articles.pageIndex = 0;
-      articles.articleList.clear();
+    var list = await HomeArticleDB.selectWith(ArticleType.Konwlege, chapterIdValue: cid);
+    if (list.isEmpty) {
+      if (isRefresh) {
+        articles.pageIndex = 0;
+        articles.articleList.clear();
+      }
+      else {
+        articles.pageIndex++;
+      }
+      list = await Network.getKnowledgeArticleList(articles.pageIndex, cid);
+      articles.articleList.addAll(list);
+
+      notifyListeners();
+
+      HomeArticleDB.insertWith(list, ArticleType.Konwlege);
     }
     else {
-      articles.pageIndex++;
+      articles.articleList.addAll(list);
+
+      notifyListeners();
     }
-
-    var list = await Network.getKnowledgeArticleList(articles.pageIndex, cid);
-    articles.articleList.addAll(list);
-
-    notifyListeners();
   }
 }
 
