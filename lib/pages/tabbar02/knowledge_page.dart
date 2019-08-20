@@ -29,7 +29,7 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
 
     //页面加载完毕请求数据
     WidgetsBinding.instance.addPostFrameCallback((_){ 
-      _refreshData();
+      _getLocationData();
     });
   }
 
@@ -110,7 +110,11 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
     );
   }
 
+  Future _getLocationData() async {
+    await Provide.value<KnowledgeProvide>(context).getLocationNodeData();
+  }
+
   Future _refreshData() async {
-    await Provide.value<KnowledgeProvide>(context).getNodeData();
+    await Provide.value<KnowledgeProvide>(context).requestNodeData();
   }
 }

@@ -84,7 +84,7 @@ class _KnowledgeTabbarPageState extends State<KnowledgeTabbarPage> {
     
     //页面加载完毕请求数据
     WidgetsBinding.instance.addPostFrameCallback((_){ 
-      _refreshData();
+      _getLocationData();
     });
   }
 
@@ -122,11 +122,15 @@ class _KnowledgeTabbarPageState extends State<KnowledgeTabbarPage> {
     return CommonListCell.articleCell(context, article);
   }
 
+  Future _getLocationData() async {
+    await Provide.value<KnowledgeProvide>(context).getLocationNodeArticleData(_cid, true);
+  }
+
   Future _refreshData() async {
-    await Provide.value<KnowledgeProvide>(context).getNodeArticleData(_cid, true);
+    await Provide.value<KnowledgeProvide>(context).requestNodeArticleData(_cid, true);
   }
 
   Future _loadMoreData() async {
-    await Provide.value<KnowledgeProvide>(context).getNodeArticleData(_cid, false);
+    await Provide.value<KnowledgeProvide>(context).requestNodeArticleData(_cid, false);
   }
 }
