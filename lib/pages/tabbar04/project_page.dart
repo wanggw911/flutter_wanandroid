@@ -29,7 +29,7 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
 
     //页面加载完毕请求数据
     WidgetsBinding.instance.addPostFrameCallback((_){ 
-      _loadProjectNodeData();
+      _getLocationData();
     });
   }
 
@@ -84,32 +84,32 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
 
     List<Widget> cellItems = [];
     cellItems.add(Container(
-            //decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.red)), //use for debug frame
-            padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 5, bottom: 5),
-            child: Container(
-              padding: EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
-              decoration: BoxDecoration(
-                color: isSelect?Colors.orangeAccent:Colors.white,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              child: Text(
-                '${node.name}',
-                style: TextStyle(
-                  color: isSelect?Colors.white:Colors.black,
-                  fontSize: setFontSize(30)
-                ),
-              ),
-            ),
-          ));
+      //decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.red)), //use for debug frame
+      padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 5, bottom: 5),
+      child: Container(
+        padding: EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
+        decoration: BoxDecoration(
+          color: isSelect?Colors.orangeAccent:Colors.white,
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        child: Text(
+          '${node.name}',
+          style: TextStyle(
+            color: isSelect?Colors.white:Colors.black,
+            fontSize: setFontSize(30)
+          ),
+        ),
+      ),
+    ));
+
     if (!isLast) {
       cellItems.add(Container(
-            width: setWidth(1.0),
-            height: setHeight(60),
-            decoration: BoxDecoration(
-              color: Colors.orange
-            ),
-            //child: ,
-          ));
+        width: setWidth(1.0),
+        height: setHeight(60),
+        decoration: BoxDecoration(
+          color: Colors.orange
+        ),
+      ));
     }
 
     return InkWell(
@@ -233,16 +233,16 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
     );
   }
 
-
-  Future _loadProjectNodeData() async {
-    await Provide.value<ProjectProvide>(context).getProjectNodeData();
+  void _getLocationData() async {
+    await Provide.value<ProjectProvide>(context).getLocationProjectNodeData();
+    await Provide.value<ProjectProvide>(context).getLocationArticleData(true);
   }
 
   Future _refreshData() async {
-    await Provide.value<ProjectProvide>(context).getArticleData(true);
+    await Provide.value<ProjectProvide>(context).requestArticleData(true);
   }
 
   Future _loadMoreData() async {
-    await Provide.value<ProjectProvide>(context).getArticleData(false);
+    await Provide.value<ProjectProvide>(context).requestArticleData(false);
   }
 }

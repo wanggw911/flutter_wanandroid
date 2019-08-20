@@ -12,53 +12,56 @@ class ProjectProvide with ChangeNotifier {
   int articlePageIndex = 1;
   List<Article> articleList = [];
 
-  Future getProjectNodeData() async {
+  Future getLocationProjectNodeData() async {
     projectNodeList.clear();
     var list = await ProjectModuleDB.selectAll();
-    if (list.isEmpty) {
-      list = await Network.getProjectTypes();
-      if (list.isNotEmpty) {
-        projectNodeList.addAll(list);
-        getArticleData(true);
-
-        ProjectModuleDB.insertWith(list);
-      }
+    if (list.isNotEmpty) {
+      projectNodeList.addAll(list);
+      notifyListeners();
     }
     else {
-      projectNodeList.addAll(list);
-      getArticleData(true);
+      await requestProjectNodeData();
     }
-
-    notifyListeners();
   }
 
-  Future getArticleData(bool isRefresh) async {
-    //TODO: 应该初始化的时候获取本地数据，这里这样获取不大好，跟网络数据那边耦合了，晚点修改
+  Future requestProjectNodeData() async {
+    var list = await Network.getProjectTypes();
+    projectNodeList.addAll(list);
+    notifyListeners();
+    ProjectModuleDB.insertWith(list);    
+  }
+
+  Future getLocationArticleData(bool isRefresh) async {
     int cid = projectNodeList[projectNodeIndex].id;
     var list = await HomeArticleDB.selectWith(ArticleType.Project, chapterIdValue: cid);
-    if (list.isEmpty) {
-      if (isRefresh) {
-        articlePageIndex = 1;
-        articleList.clear();
-      }
-      else {
-        articlePageIndex++;
-      }
-      list = await Network.getProjectArticleList(articlePageIndex, cid);
-      articleList.addAll(list);
-      notifyListeners();
-
-      HomeArticleDB.insertWith(list, ArticleType.Project);
-    }
-    else {
+    if (list.isNotEmpty) {
       articleList.clear();
       articleList.addAll(list);
       notifyListeners();
     }
+    else {
+      await requestArticleData(true);
+    }
+  }
+
+  Future requestArticleData(bool isRefresh) async {
+    if (isRefresh) {
+      articlePageIndex = 1;
+      articleList.clear();
+    }
+    else {
+      articlePageIndex++;
+    }
+
+    int cid = projectNodeList[projectNodeIndex].id;
+    var list = await Network.getProjectArticleList(articlePageIndex, cid);
+    articleList.addAll(list);
+    notifyListeners();
+    HomeArticleDB.insertWith(list, ArticleType.Project);
   }
 
   void selectProjectNodeWith(int index) {
     projectNodeIndex = index;
-    getArticleData(true);
+    getLocationArticleData(true);
   }
 }
