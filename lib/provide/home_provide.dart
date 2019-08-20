@@ -11,32 +11,48 @@ class HomeProvide with ChangeNotifier {
   int _articlePageIndex = 0;
   List<Article> articleList = [];
 
-  Future getHomePageData() async {
-    //初始获取首页广告数据
-    bannerList = await getLocationBannerData();
-    if (bannerList.isNotEmpty){
+  // Future getHomePageData() async {
+  //   //初始获取首页广告数据
+  //   bannerList = await getLocationBannerData();
+  //   if (bannerList.isNotEmpty){
+  //     notifyListeners();
+  //   }
+  //   else {
+  //     await requestBannerData();
+  //   }
+
+  //   //初始获取首页文章数据
+  //   articleList = await getLocationArticleData();
+  //   if (articleList.isNotEmpty){
+  //     notifyListeners();
+  //   }
+  //   else {
+  //     await requestArticleData(true);
+  //   }
+  // }
+
+  Future getLocationBannerData() async {
+    bannerList.clear();
+    var list = await HomeBannerDB.selectAll();
+    if (list.isNotEmpty) {
+      bannerList.addAll(list);
       notifyListeners();
     }
     else {
       await requestBannerData();
     }
+  }
 
-    //初始获取首页文章数据
-    articleList = await getLocationArticleData();
-    if (articleList.isNotEmpty){
+  Future getLocationArticleData() async {
+    articleList.clear();
+    var list = await HomeArticleDB.selectWith(ArticleType.Home);
+    if (list.isNotEmpty) {
+      articleList.addAll(list);
       notifyListeners();
     }
     else {
       await requestArticleData(true);
     }
-  }
-
-  Future<List<HomeBanner>> getLocationBannerData() async {
-    return await HomeBannerDB.selectAll();
-  }
-
-  Future<List<Article>> getLocationArticleData() async {
-    return await HomeArticleDB.selectWith(ArticleType.Home);
   }
 
   //请求获取广告数据

@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
 
   GlobalKey<EasyRefreshState> _easyRefreshKey =  GlobalKey<EasyRefreshState>();
 
-  //bool _showLoading = false;
+  //bool _showLoading = false; //上下拉刷和Loading配合使用的例子
 
   @override
   bool get wantKeepAlive => true;
@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
 
     //页面加载完毕请求数据
     WidgetsBinding.instance.addPostFrameCallback((_){ 
-      _refreshData();
+      _getLocationData();
     });
   }
 
@@ -141,8 +141,15 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
     return CommonListCell.articleCell(context, article);
   }
 
+  Future _getLocationData() async {
+    //初始加载数据库数据，如果没有加载到则进行网络请求
+    await Provide.value<HomeProvide>(context).getLocationBannerData();
+    await Provide.value<HomeProvide>(context).getLocationArticleData();
+  }
+
   Future _refreshData() async {
-    await Provide.value<HomeProvide>(context).getHomePageData();
+    await Provide.value<HomeProvide>(context).requestBannerData();
+    await Provide.value<HomeProvide>(context).requestArticleData(true);
   }
 
   Future _loadMoreData() async {

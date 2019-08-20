@@ -1,4 +1,15 @@
 
+function removeRemoteRepo() {
+	# 1、cd 到当前目录
+	currentDir=$(cd "$(dirname "$0")"; pwd)
+	cd ${currentDir}
+
+	git remote rm origin
+
+	sleep 3
+	exit 1
+}
+
 function openRemoteUrl() {
 	# 1、cd 到当前目录
 	currentDir=$(cd "$(dirname "$0")"; pwd)
@@ -85,6 +96,7 @@ function chooseAction() {
 	echo "\033[32m——----- 2：填写commit信息再提交 \033[0m"
 	echo "\033[32m——----- 3：拉取代码 \033[0m"
 	echo "\033[32m——----- 4：打开远程仓库链接 \033[0m"
+	echo "\033[32m——----- 5：移除远程仓库 \033[0m"
 
 	read selectIndex
 
@@ -100,6 +112,9 @@ function chooseAction() {
 	elif [ $selectIndex -eq 4 ]
 	then
 		openRemoteUrl
+	elif [ $selectIndex -eq 4 ]
+	then
+		removeRemoteRepo
 	else
 		echo "\033[32m——----- 没有需要进行的操作😝 \033[0m"
 	fi

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_wanandroid/database/project_article_db.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart'; //join method need import
@@ -35,18 +34,6 @@ class DatabaseHander {
     var databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'wan_android.db');
     
-    //Database database = await factory.openDatabase.
-
-    // Database database = await openDatabase(path, 
-    //   version: 1,
-    //   onCreate: (Database db, int version) async {
-    //     print("数据表版本1.0");
-    //     var batch = db.batch();
-    //     _createVersion1Tables(batch);
-    //     await batch.commit();
-    //   }
-    // );
-
     Database database = await openDatabase(path, 
       version: 2,
       onCreate: (Database db, int version) async {
@@ -71,15 +58,6 @@ class DatabaseHander {
     await database.close();
   }
 
-  // 数据表1.0
-  void _createVersion1Tables(Batch batch) {
-    batch.execute(HomeBannerDB.createTableSql());
-    batch.execute(HomeArticleDB.createTableSqlV1());
-    batch.execute(KnowledgeTreeNodeDB.createTableSql());
-    batch.execute(NavigationNodeDB.createSuperNodeTableSql());
-    batch.execute(NavigationNodeDB.createSubNodeTableSql());
-  }
-
   // 数据表2.0
   void _createVersion2Tables(Batch batch) {
     batch.execute(HomeBannerDB.createTableSql());
@@ -96,14 +74,6 @@ class DatabaseHander {
   void _updateTablesV1ToV2(Batch batch) {
     /* 
       [sqflite 数据库更新](https://github.com/tekartik/sqflite/blob/master/sqflite/doc/migration_example.md)
-      HomeArticle文章数据表
-        1、添加字段1：envelopePic，默认值为空的字符串，update会更新这个字段
-        2、添加字段2：articleType，默认值为空的字符串
-           文章类型，在添加新字段的时候，需要默认写入 0，因为最开始存的文章就是首页的文章
-           ALTER TABLE t_test ADD age int DEFAULT 20
-           ALTER TABLE Company ADD description TEXT
-        3、添加字段3：章节id，不然在知识体系这边就，，文章可能重复，怎么搞？重复了就update？
-           再次插入文章数据的时候，可能需要更新一下表，如何把章节的id加入进去
      */ 
     //升级1：给文章表增加4个字段
     var tabelName = HomeArticleDB.tableHomeArticle;
