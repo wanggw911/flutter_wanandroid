@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_wanandroid/model/navigation_tree.dart';
 import 'package:flutter_wanandroid/pages/common/common_appbar.dart';
 import 'package:flutter_wanandroid/pages/common/drawer_menu.dart';
@@ -16,7 +17,7 @@ class NavigationPage extends StatefulWidget {
 }
 
 class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAliveClientMixin {
-  
+
   @override
   bool get wantKeepAlive => true;
 
@@ -26,7 +27,7 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
 
     //页面加载完毕请求数据
     WidgetsBinding.instance.addPostFrameCallback((_){ 
-      _refreshData();
+      _getLocationData();
     });
   }
 
@@ -164,7 +165,7 @@ class _NavigationPageState extends State<NavigationPage> with AutomaticKeepAlive
       });
   }
 
-  Future _refreshData() async {
-    await Provide.value<NavigationProvide>(context).getNavigationNodeData();
+  void _getLocationData() async {
+    await Provide.value<NavigationProvide>(context).getLocationNavigationNodeData();
   }
 }

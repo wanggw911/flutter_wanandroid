@@ -8,24 +8,30 @@ class NavigationProvide with ChangeNotifier {
   List<NavigationSuperNode> leftList = [];
   int selectedLeftIndex = 0;
   
-  Future getNavigationNodeData() async {
-    leftList.clear();
-    leftList = await NavigationNodeDB.selectAll();
-    if (leftList.isEmpty) {
-      var list = await Network.getNavigationAllNodes();
-      if (list.length > 0) {
-          leftList.addAll(list);
-      }
-
-      NavigationNodeDB.insertWith(list);
+  Future getLocationNavigationNodeData() async {
+    var list = await NavigationNodeDB.selectAll();
+    if (list.isNotEmpty) {
+      leftList.clear();
+      leftList.addAll(list);
+      notifyListeners();
     }
+    else {
+      await requestNavigationNodeData();
+    }
+  }
 
+  Future requestNavigationNodeData() async {
+    leftList.clear();
+    var list = await Network.getNavigationAllNodes();
+    leftList.addAll(list);
+  
     notifyListeners();
+
+    NavigationNodeDB.insertWith(list);
   }
 
   void selectLeftIndex(int index) {
     selectedLeftIndex = index;
-
     notifyListeners();
   }
 }
