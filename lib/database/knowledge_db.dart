@@ -21,17 +21,14 @@ class KnowledgeTreeNodeDB {
   static Future insertWith(List<KnowledgeTreeNode> list, bool isSub) async {
     print('KnowledgeTreeNode List 准备插入数据的条数：${list.length}，${isSub?'子节点':'父节点'}');
 
-    var count = 0;
     var database = await DatabaseHander.shared.db;
     await database.transaction((txn) async {
       list.forEach((treeNode) async {
         var insertSql = '''
-            INSERT INTO $tableKnowledgeTreeNode($id, $name, $parentId) 
-            VALUES(?, ?, ?)
+            insert or replace into $tableKnowledgeTreeNode($id, $name, $parentId) 
+            values(?, ?, ?)
             ''';
         await txn.rawInsert(insertSql, [treeNode.id, treeNode.name, treeNode.parentChapterId]);
-        count++;
-        print('KnowledgeTreeNode List 成功插入数据的条数：$count，${isSub?'子节点':'父节点'}');
         //插入子节点
         insertWith(treeNode.children, true);
       });
@@ -44,22 +41,6 @@ class KnowledgeTreeNodeDB {
   static Future<List<KnowledgeTreeNode>> selectAll() async {
     List<KnowledgeTreeNode> list = [];
     var database = await DatabaseHander.shared.db;
-
-    // 多个异步操作不能使用
-    // //Step1：查询父节点的数据
-    // List<Map> datalist = await database.rawQuery('SELECT * FROM $tableKnowledgeTreeNode  where $parentId=0');
-    // datalist.forEach((item) async {
-    //   KnowledgeTreeNode node = KnowledgeTreeNode.fromJson(item);
-    //   //Step2：根据父节点的id，来查询子节点的列表
-    //   List<KnowledgeTreeNode> subList = [];
-    //   List<Map> subDatalist = await database.rawQuery('SELECT * FROM $tableKnowledgeTreeNode where $parentId=${node.id}');
-    //   subDatalist.forEach((subItem){
-    //     subList.add(KnowledgeTreeNode.fromJson(subItem));
-    //   });
-    //   node.children = subList;
-    //   print('返回列表：-----222');
-    //   list.add(node);
-    // });
 
     //Step1：查询父节点的数据
     List<Map> datalist = await database.rawQuery('SELECT * FROM $tableKnowledgeTreeNode  where $parentId=0');

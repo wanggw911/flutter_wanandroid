@@ -34,23 +34,20 @@ class NavigationNodeDB {
   static Future insertWith(List<NavigationSuperNode> list) async {
     print('NavigationSuperNode List 准备插入数据的条数：${list.length}');
 
-    var count = 0;
     var database = await DatabaseHander.shared.db;
     await database.transaction((txn) async {
 
       for (NavigationSuperNode treeNode in list) {
         var insertSql = '''
-          INSERT INTO $tableNavigationSuperNode($superId, $superName) 
-          VALUES(?, ?)
-          ''';
+        insert or replace into $tableNavigationSuperNode($superId, $superName) 
+        values(?, ?)
+        ''';
         await txn.rawInsert(insertSql, [treeNode.cid, treeNode.name]);
-        count++;
-        print('KnowledgeTreeNode List 成功插入数据的条数：$count');
-
+ 
         for (NavigationSubNode subNode in treeNode.articles) {
           var subInsertSql = '''
-          INSERT INTO $tableNavigationSubNode($id, $parentId, $title, $link) 
-          VALUES(?, ?, ?, ?)
+          insert or replace into $tableNavigationSubNode($id, $parentId, $title, $link) 
+          values(?, ?, ?, ?)
           ''';
           await txn.rawInsert(subInsertSql, [subNode.id, treeNode.cid, subNode.title, subNode.link]);
         }

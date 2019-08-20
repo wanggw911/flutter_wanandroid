@@ -63,45 +63,14 @@ class HomeArticleDB {
     print('Article List 准备插入数据的条数：${list.length}');
 
     var database = await DatabaseHander.shared.db;
-    
-    var count = 0;
     await database.transaction((txn) async {
       list.forEach((article) async {
-        //使用 txn.insert 的条件是 model 字段和数据库字段完全匹配，数据库的表不能少字段😂
-        //var insertId = await txn.insert('$tableHomeArticle', article.toJson(), conflictAlgorithm: ConflictAlgorithm.replace);
-        //print('插入数据一条，student id：$insertId');
-
         var insertSql = '''
-        INSERT OR REPLACE INTO $tableHomeArticle($id, $title, $author, $chapterName, $superChapterName, $niceDate, $fresh, $link, $desc, $projectLink, $envelopePic, $chapterId, $articleType) 
-        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        insert or replace into $tableHomeArticle($id, $title, $author, $chapterName, $superChapterName, $niceDate, $fresh, $link, $desc, $projectLink, $envelopePic, $chapterId, $articleType) 
+        values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''';
         await txn.rawInsert(insertSql, 
         [article.id, article.title, article.author, article.chapterName, article.superChapterName, article.niceDate, article.fresh?1:0, article.link, article.desc, article.projectLink, article.envelopePic, article.chapterId, articlesType.index]);
-        count++;
-        print('Article List 成功插入数据的条数：$count');
-
-
-        // int resultCount = Sqflite.firstIntValue(await database.rawQuery('SELECT COUNT(*) FROM $tableHomeArticle where id=${article.id}'));
-        // if (resultCount == 0) {
-        //   print("不存在，插入记录");
-        //   var insertSql = '''
-        //     INSERT INTO $tableHomeArticle($id, $title, $author, $chapterName, $superChapterName, $niceDate, $fresh, $link, $desc, $projectLink, $envelopePic, $chapterId, $articleType) 
-        //     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        //     ''';
-        //     await txn.rawInsert(insertSql, 
-        //   [article.id, article.title, article.author, article.chapterName, article.superChapterName, article.niceDate, article.fresh?1:0, article.link, article.desc, article.projectLink, article.envelopePic, article.chapterId, articlesType.index]);
-        //   count++;
-        //   print('Article List 成功插入数据的条数：$count');
-        // }
-        // else {
-        //   print("存在，更新记录");
-        //   // var updateSql = '''
-        //   //   UPDATE $tableHomeArticle SET ($id, $title, $author, $chapterName, $superChapterName, $niceDate, $fresh, $link, $projectLink, $envelopePic, $chapterId, $articleType) 
-        //   //   VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        //   //   ''';
-        //   //   await txn.rawUpdate(updateSql, 
-        //   // [article.id, article.title, article.author, article.chapterName, article.superChapterName, article.niceDate, article.fresh?1:0, article.link, article.projectLink, article.envelopePic, article.chapterId, articleType.index]);
-        // }
       });
     });
 
@@ -115,10 +84,10 @@ class HomeArticleDB {
     var database = await DatabaseHander.shared.db;
     var selectSql = "";
     if (chapterIdValue > 0) {
-      selectSql = 'SELECT * FROM $tableHomeArticle where articleType=${articleType.index} and chapterId=$chapterIdValue';
+      selectSql = 'select * from $tableHomeArticle where articleType=${articleType.index} and chapterId=$chapterIdValue';
     }
     else {
-      selectSql = 'SELECT * FROM $tableHomeArticle where articleType=${articleType.index}';
+      selectSql = 'select * from $tableHomeArticle where articleType=${articleType.index}';
     }
     List<Map> datalist = await database.rawQuery(selectSql);
     datalist.forEach((item) {

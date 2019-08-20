@@ -21,18 +21,15 @@ class ProjectModuleDB {
   static Future insertWith(List<ProjectNode> list) async {
     print('NavigationSuperNode List 准备插入数据的条数：${list.length}');
 
-    var count = 0;
     var database = await DatabaseHander.shared.db;
     await database.transaction((txn) async {
 
       for (ProjectNode treeNode in list) {
         var insertSql = '''
-          INSERT INTO $tableProjectTreeNode($id, $name) 
-          VALUES(?, ?)
-          ''';
+        insert or replace into $tableProjectTreeNode($id, $name) 
+        values(?, ?)
+        ''';
         await txn.rawInsert(insertSql, [treeNode.id, treeNode.name]);
-        count++;
-        print('KnowledgeTreeNode List 成功插入数据的条数：$count');
       }
     });
 
