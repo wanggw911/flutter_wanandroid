@@ -210,7 +210,7 @@ class _ProjectsPageState extends State<ProjectsPage> with AutomaticKeepAliveClie
                           padding: EdgeInsets.only(top:10, bottom: 10),
                           child: Text(
                             '${article.desc}',
-                            maxLines: 4,
+                            maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
