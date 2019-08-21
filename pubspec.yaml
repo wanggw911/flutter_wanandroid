@@ -43,6 +43,7 @@ dependencies:
   webview_flutter: ^0.3.11+3
   url_launcher: ^5.1.2
   sqflite: ^1.1.6+3
+  connectivity: ^0.4.3+7
 
 dev_dependencies:
   flutter_test:
