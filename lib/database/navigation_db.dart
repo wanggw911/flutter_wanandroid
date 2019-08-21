@@ -54,7 +54,7 @@ class NavigationNodeDB {
       }
     });
 
-    //TODO: 数据库关闭的时机需要考虑好在什么时候关闭
+    //数据库关闭的时机需要考虑好在什么时候关闭
     //await DatabaseHander.shared.closeDatabase();
   }
 
@@ -77,7 +77,7 @@ class NavigationNodeDB {
       list.add(node);
     }
 
-    //TODO: 数据库关闭的时机需要考虑好在什么时候关闭
+    //数据库关闭的时机需要考虑好在什么时候关闭
     //await DatabaseHander.shared.closeDatabase();
     
     return list;

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_wanandroid/model/navigation_tree.dart';
 import 'package:flutter_wanandroid/pages/common/common_appbar.dart';
 import 'package:flutter_wanandroid/pages/common/drawer_menu.dart';

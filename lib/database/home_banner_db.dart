@@ -1,7 +1,6 @@
 
 import 'package:flutter_wanandroid/database/database_hander.dart';
 import 'package:flutter_wanandroid/model/home_banner.dart';
-import 'package:sqflite/sqflite.dart';
 
 class HomeBannerDB {
   static final String tableHomeBanner = 'HomeBanner';
@@ -36,7 +35,7 @@ class HomeBannerDB {
       });
     });
 
-    //TODO: 数据库关闭的时机需要考虑好在什么时候关闭
+    //数据库关闭的时机需要考虑好在什么时候关闭
     //await DatabaseHander.shared.closeDatabase();
   }
 
@@ -49,7 +48,7 @@ class HomeBannerDB {
       list.add(HomeBanner.fromJson(item));
     });
 
-    //TODO: 数据库关闭的时机需要考虑好在什么时候关闭
+    //T数据库关闭的时机需要考虑好在什么时候关闭
     //await DatabaseHander.shared.closeDatabase();
 
     return list;

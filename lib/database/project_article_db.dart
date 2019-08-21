@@ -33,7 +33,7 @@ class ProjectModuleDB {
       }
     });
 
-    //TODO: 数据库关闭的时机需要考虑好在什么时候关闭
+    //数据库关闭的时机需要考虑好在什么时候关闭
     //await DatabaseHander.shared.closeDatabase();
   }
 
@@ -47,7 +47,7 @@ class ProjectModuleDB {
       list.add(ProjectNode.fromJson(item));
     }
 
-    //TODO: 数据库关闭的时机需要考虑好在什么时候关闭
+    //数据库关闭的时机需要考虑好在什么时候关闭
     //await DatabaseHander.shared.closeDatabase();
     
     return list;
