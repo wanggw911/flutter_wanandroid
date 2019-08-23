@@ -4,9 +4,23 @@ function removeRemoteRepo() {
 	currentDir=$(cd "$(dirname "$0")"; pwd)
 	cd ${currentDir}
 
-	git remote rm origin
+	echo "\033[32m——----- 警告：git remote rm origin 操作不可逆，请先确保checkout了所有分支！\033[0m"
+	git remote -v
 
-	sleep 3
+	echo "\033[32m——----- 请选择： \033[0m"
+	echo "\033[32m——----- 1: 已经 checkout 了所有分支 \033[0m"
+	echo "\033[32m——----- 2: 还没 checkout 所有分支 \033[0m"
+
+	read selectIndex
+
+	if [ $selectIndex -eq 1 ]
+	then
+		git remote rm origin
+	else
+		echo "\033[32m——----- 没有需要进行的操作😝 \033[0m"
+	fi
+
+	sleep 2
 	exit 1
 }
 
@@ -20,7 +34,7 @@ function openRemoteUrl() {
 	echo "\033[32m——----- 远程仓库的地址：$remoteUrl \033[0m"
 	open -a Safari $remoteUrl
 
-	sleep 3
+	sleep 2
 	exit 1
 }
 
@@ -45,7 +59,7 @@ function pushAndOpenWebsite() {
 		echo "\033[32m——----- 提交完成🎉🎉🎉🎈🎈🎈\033[0m"
 	fi
 
-	sleep 3
+	sleep 2
 	exit 1
 }
 
@@ -112,7 +126,7 @@ function chooseAction() {
 	elif [ $selectIndex -eq 4 ]
 	then
 		openRemoteUrl
-	elif [ $selectIndex -eq 4 ]
+	elif [ $selectIndex -eq 5 ]
 	then
 		removeRemoteRepo
 	else
